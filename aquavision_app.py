@@ -252,9 +252,35 @@ if page == "🏠 Dashboard":
         st.plotly_chart(fig, use_container_width=True)
 
     st.markdown('<div class="section-title">Parameter Overview</div>', unsafe_allow_html=True)
+    
+    param_info = {
+        'temp': ('Temperature', '°C', '#FF6B6B'),
+        'do': ('Dissolved Oxygen', 'mg/L', '#4ECDC4'),
+        'ph': ('pH Level', 'pH', '#45B7D1'),
+        'conductivity': ('Conductivity', 'µS/cm', '#FFA07A'),
+        'bod': ('BOD', 'mg/L', '#98D8C8'),
+        'nitrate': ('Nitrate', 'mg/L', '#F7DC6F')
+    }
+    
     cols = st.columns(6)
-    for i, col_name in enumerate(['temp','do','ph','conductivity','bod','nitrate']):
-        cols[i].metric(col_name.upper(), f"{dff[col_name].mean():.2f}")
+    for i, (col_name, (label, unit, color)) in enumerate(param_info.items()):
+        with cols[i]:
+            value = dff[col_name].mean()
+            st.markdown(f"""
+            <div style='background: white; border-radius: 12px; padding: 1.2rem 1rem;
+                        box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-left: 5px solid {color};
+                        text-align: center;'>
+                <div style='font-size: 0.75rem; color: #666; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;'>
+                    {label}
+                </div>
+                <div style='font-size: 1.8rem; font-weight: 800; color: {color}; margin: 0.5rem 0;'>
+                    {value:.2f}
+                </div>
+                <div style='font-size: 0.75rem; color: #888;'>
+                    {unit}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
