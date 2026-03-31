@@ -121,41 +121,41 @@ st.markdown("""
         border-radius: 0 8px 8px 0;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
     }
-    
-    /* Sidebar */
-     /* Sidebar - ALL text white */
-div[data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #0D47A1 0%, #006064 100%);
-}
-div[data-testid="stSidebar"] * {
-    color: white !important;
-}
-div[data-testid="stSidebar"] h1,
-div[data-testid="stSidebar"] h2,
-div[data-testid="stSidebar"] h3,
-div[data-testid="stSidebar"] h4,
-div[data-testid="stSidebar"] p,
-div[data-testid="stSidebar"] span,
-div[data-testid="stSidebar"] label,
-div[data-testid="stSidebar"] div,
-div[data-testid="stSidebar"] .stMarkdown,
-div[data-testid="stSidebar"] .stMarkdown p,
-div[data-testid="stSidebar"] .stSelectbox label,
-div[data-testid="stSidebar"] .stSlider label,
-div[data-testid="stSidebar"] [data-baseweb="select"] span,
-div[data-testid="stSidebar"] [data-baseweb="select"] div,
-div[data-testid="stSidebar"] .stSlider [data-testid="stTickBarMin"],
-div[data-testid="stSidebar"] .stSlider [data-testid="stTickBarMax"] {
-    color: white !important;
-}
-div[data-testid="stSidebar"] .stSelectbox [data-baseweb="select"] > div {
-    background-color: rgba(255,255,255,0.15) !important;
-    border-color: rgba(255,255,255,0.3) !important;
-    color: white !important;
-}
-div[data-testid="stSidebar"] hr {
-    border-color: rgba(255,255,255,0.3) !important;
-}
+
+    /* ── SIDEBAR — ALL TEXT WHITE ─────────────────────────────────────────── */
+    div[data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #0D47A1 0%, #006064 100%);
+    }
+    div[data-testid="stSidebar"] * {
+        color: white !important;
+    }
+    div[data-testid="stSidebar"] h1,
+    div[data-testid="stSidebar"] h2,
+    div[data-testid="stSidebar"] h3,
+    div[data-testid="stSidebar"] h4,
+    div[data-testid="stSidebar"] p,
+    div[data-testid="stSidebar"] span,
+    div[data-testid="stSidebar"] label,
+    div[data-testid="stSidebar"] div,
+    div[data-testid="stSidebar"] .stMarkdown,
+    div[data-testid="stSidebar"] .stMarkdown p,
+    div[data-testid="stSidebar"] .stSelectbox label,
+    div[data-testid="stSidebar"] .stSlider label,
+    div[data-testid="stSidebar"] [data-baseweb="select"] span,
+    div[data-testid="stSidebar"] [data-baseweb="select"] div,
+    div[data-testid="stSidebar"] .stSlider [data-testid="stTickBarMin"],
+    div[data-testid="stSidebar"] .stSlider [data-testid="stTickBarMax"] {
+        color: white !important;
+    }
+    div[data-testid="stSidebar"] .stSelectbox [data-baseweb="select"] > div {
+        background-color: rgba(255,255,255,0.15) !important;
+        border-color: rgba(255,255,255,0.3) !important;
+        color: white !important;
+    }
+    div[data-testid="stSidebar"] hr {
+        border-color: rgba(255,255,255,0.3) !important;
+    }
+    /* ── END SIDEBAR ──────────────────────────────────────────────────────── */
     
     /* Input labels - make them clearly visible */
     .stNumberInput label,
