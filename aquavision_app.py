@@ -123,7 +123,7 @@ st.markdown("""
     }
     
     /* Sidebar */
-   /* Sidebar - ALL text white */
+     /* Sidebar - ALL text white */
 div[data-testid="stSidebar"] {
     background: linear-gradient(180deg, #0D47A1 0%, #006064 100%);
 }
