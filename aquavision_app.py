@@ -11,6 +11,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import os
+import io
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -62,6 +63,33 @@ st.markdown("""
     }
     div[data-testid="stSidebar"] { background: linear-gradient(180deg, #0D47A1 0%, #006064 100%); }
     div[data-testid="stSidebar"] * { color: white !important; }
+
+    /* ── Bulk Scanner Styles ── */
+    .scanner-card {
+        background: white; border-radius: 16px; padding: 1.8rem 2rem;
+        box-shadow: 0 4px 20px rgba(21,101,192,0.1);
+        border-top: 4px solid #1565C0; height: 100%;
+    }
+    .scanner-card h3 {
+        font-size: 1rem; font-weight: 700; color: #1565C0;
+        text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.2rem;
+        padding-left: 0.6rem; border-left: 3px solid #1565C0;
+    }
+    .upload-zone {
+        border: 2px dashed #90CAF9; border-radius: 12px;
+        padding: 2.5rem; text-align: center;
+        background: linear-gradient(135deg, #E3F2FD 0%, #E8F5E9 100%);
+        transition: all 0.3s ease;
+    }
+    .result-badge {
+        display: inline-block; padding: 0.3rem 1rem; border-radius: 50px;
+        font-size: 0.85rem; font-weight: 700; color: white; margin: 0.2rem;
+    }
+    .stat-pill {
+        background: #E3F2FD; border-radius: 50px; padding: 0.4rem 1rem;
+        font-size: 0.85rem; font-weight: 600; color: #1565C0;
+        display: inline-block; margin: 0.2rem;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -179,6 +207,7 @@ with st.sidebar:
         "🤖 WQI Predictor",
         "🗺️ State Intelligence",
         "📋 Dataset Explorer",
+        "📂 Bulk WQI Scanner",
     ])
     st.divider()
     st.markdown("**Filter Data**")
@@ -252,35 +281,9 @@ if page == "🏠 Dashboard":
         st.plotly_chart(fig, use_container_width=True)
 
     st.markdown('<div class="section-title">Parameter Overview</div>', unsafe_allow_html=True)
-    
-    param_info = {
-        'temp': ('Temperature', '°C', '#FF6B6B'),
-        'do': ('Dissolved Oxygen', 'mg/L', '#4ECDC4'),
-        'ph': ('pH Level', 'pH', '#45B7D1'),
-        'conductivity': ('Conductivity', 'µS/cm', '#FFA07A'),
-        'bod': ('BOD', 'mg/L', '#98D8C8'),
-        'nitrate': ('Nitrate', 'mg/L', '#F7DC6F')
-    }
-    
     cols = st.columns(6)
-    for i, (col_name, (label, unit, color)) in enumerate(param_info.items()):
-        with cols[i]:
-            value = dff[col_name].mean()
-            st.markdown(f"""
-            <div style='background: white; border-radius: 12px; padding: 1.2rem 1rem;
-                        box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-left: 5px solid {color};
-                        text-align: center;'>
-                <div style='font-size: 0.75rem; color: #666; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;'>
-                    {label}
-                </div>
-                <div style='font-size: 1.8rem; font-weight: 800; color: {color}; margin: 0.5rem 0;'>
-                    {value:.2f}
-                </div>
-                <div style='font-size: 0.75rem; color: #888;'>
-                    {unit}
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+    for i, col_name in enumerate(['temp','do','ph','conductivity','bod','nitrate']):
+        cols[i].metric(col_name.upper(), f"{dff[col_name].mean():.2f}")
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -546,7 +549,231 @@ elif page == "📋 Dataset Explorer":
                        file_name='aquavision_filtered.csv', mime='text/csv')
 
 
-# ── Footer ─────────────────────────────────────────────────────────────────────
+
+# ══════════════════════════════════════════════════════════════════════════════
+# PAGE: BULK WQI SCANNER
+# ══════════════════════════════════════════════════════════════════════════════
+elif page == "📂 Bulk WQI Scanner":
+    st.markdown('<div class="section-title">📂 Bulk WQI Scanner</div>', unsafe_allow_html=True)
+    st.markdown("Upload a CSV file with water quality parameters to predict WQI scores for all samples at once.")
+
+    # ── Three-column layout like FraudGuard ──────────────────────────────────
+    col_dl, col_up, col_res = st.columns(3)
+
+    # ── Column 1: Download Sample ─────────────────────────────────────────────
+    with col_dl:
+        st.markdown("""
+        <div class="scanner-card">
+            <h3>📥 Download Sample File</h3>
+        </div>
+        """, unsafe_allow_html=True)
+        st.markdown("")
+        fmt = st.selectbox("Format", ["CSV", "Excel (.xlsx)"], key="dl_fmt")
+        sample_data = pd.DataFrame({
+            'temp':        [25.0, 28.5, 22.3, 30.1, 19.8],
+            'do':          [7.5,  5.2,  9.1,  4.8,  8.3],
+            'ph':          [7.0,  6.8,  7.4,  8.1,  6.5],
+            'conductivity':[250,  480,  120,  620,  310],
+            'bod':         [2.0,  4.5,  1.2,  6.8,  2.8],
+            'nitrate':     [5.0,  12.0, 3.5,  18.0, 7.2],
+            'fecal_coliform':[100, 450,  50,   900,  200],
+            'total_coliform':[500, 1800, 180, 3500,  750],
+        })
+        if fmt == "CSV":
+            csv_bytes = sample_data.to_csv(index=False).encode('utf-8')
+            st.download_button(
+                label="⬇️ Download Sample CSV",
+                data=csv_bytes,
+                file_name="aquavision_sample.csv",
+                mime="text/csv",
+                use_container_width=True
+            )
+        else:
+            import io
+            buf = io.BytesIO()
+            sample_data.to_excel(buf, index=False, engine='openpyxl')
+            st.download_button(
+                label="⬇️ Download Sample Excel",
+                data=buf.getvalue(),
+                file_name="aquavision_sample.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                use_container_width=True
+            )
+        st.markdown("""
+        <div style='margin-top:1rem; padding:1rem; background:#E3F2FD; border-radius:10px; font-size:0.82rem; color:#1565C0;'>
+        <b>Required columns:</b><br>
+        temp, do, ph, conductivity,<br>bod, nitrate, fecal_coliform,<br>total_coliform
+        </div>
+        """, unsafe_allow_html=True)
+
+    # ── Column 2: Upload File ─────────────────────────────────────────────────
+    with col_up:
+        st.markdown("""
+        <div class="scanner-card">
+            <h3>📤 Upload File to Scan</h3>
+        </div>
+        """, unsafe_allow_html=True)
+        st.markdown("")
+        uploaded = st.file_uploader(
+            "Drag & drop or browse",
+            type=["csv", "xlsx"],
+            label_visibility="collapsed",
+            key="bulk_upload"
+        )
+        st.markdown("""
+        <div style='text-align:center; color:#888; font-size:0.78rem; margin-top:0.5rem;'>
+            Limit 200MB per file &nbsp;•&nbsp; CSV, XLSX
+        </div>
+        """, unsafe_allow_html=True)
+
+        scan_clicked = False
+        if uploaded:
+            st.success(f"✅ **{uploaded.name}** uploaded successfully!")
+            scan_clicked = st.button("🔍 Run WQI Scan", use_container_width=True, type="primary")
+
+    # ── Column 3: Results Preview ─────────────────────────────────────────────
+    with col_res:
+        st.markdown("""
+        <div class="scanner-card">
+            <h3>📊 Scan Results</h3>
+        </div>
+        """, unsafe_allow_html=True)
+        if not uploaded:
+            st.markdown("""
+            <div style='color:#aaa; font-size:0.9rem; padding:1rem 0; text-align:center;'>
+                No scanned results yet —<br>upload a file and run the scan<br>to generate WQI predictions.
+            </div>
+            """, unsafe_allow_html=True)
+
+    # ── Processing & Full Results ─────────────────────────────────────────────
+    if uploaded and scan_clicked:
+        try:
+            if uploaded.name.endswith('.csv'):
+                df_bulk = pd.read_csv(uploaded, encoding='latin1')
+            else:
+                df_bulk = pd.read_excel(uploaded)
+
+            REQUIRED = ['temp','do','ph','conductivity','bod','nitrate','fecal_coliform','total_coliform']
+            missing_cols = [c for c in REQUIRED if c not in df_bulk.columns]
+
+            if missing_cols:
+                st.error(f"❌ Missing required columns: **{', '.join(missing_cols)}**")
+                st.info(f"Your file has: {', '.join(df_bulk.columns.tolist())}")
+            else:
+                with st.spinner('🔍 Scanning samples... Computing WQI scores...'):
+                    # Clean & impute
+                    df_proc = df_bulk.copy()
+                    for c in REQUIRED:
+                        df_proc[c] = pd.to_numeric(df_proc[c], errors='coerce')
+                    imp = KNNImputer(n_neighbors=3)
+                    df_proc[REQUIRED] = imp.fit_transform(df_proc[REQUIRED])
+
+                    # Predict
+                    feat_vecs = [engineer_single({c: df_proc.iloc[i][c] for c in REQUIRED})
+                                 for i in range(len(df_proc))]
+                    feat_scaled = scaler.transform(feat_vecs)
+                    wqi_preds   = reg_model.predict(feat_scaled)
+                    cat_preds   = label_enc.inverse_transform(clf_model.predict(feat_scaled))
+                    proba_all   = clf_model.predict_proba(feat_scaled)
+                    confidence  = proba_all.max(axis=1) * 100
+
+                    df_result = df_bulk.copy()
+                    df_result['Predicted_WQI']      = wqi_preds.round(2)
+                    df_result['WQI_Category']        = cat_preds
+                    df_result['Confidence_%']        = confidence.round(1)
+
+                # ── Summary KPIs ──────────────────────────────────────────────
+                st.markdown("---")
+                st.markdown('<div class="section-title">📊 Scan Summary</div>', unsafe_allow_html=True)
+
+                k1, k2, k3, k4, k5 = st.columns(5)
+                kpi_data = [
+                    ("Total Samples",   f"{len(df_result):,}",            "#1565C0"),
+                    ("Avg WQI Score",   f"{df_result['Predicted_WQI'].mean():.1f}", "#00897B"),
+                    ("Avg Confidence",  f"{df_result['Confidence_%'].mean():.1f}%", "#7B1FA2"),
+                    ("Best Category",   df_result['WQI_Category'].value_counts().idxmax(), "#1B5E20"),
+                    ("High Risk (>75)", f"{(df_result['Predicted_WQI']>75).sum():,}", "#C62828"),
+                ]
+                for kcol, (lbl, val, clr) in zip([k1,k2,k3,k4,k5], kpi_data):
+                    kcol.markdown(f"""
+                    <div class="metric-card" style="border-left-color:{clr}">
+                        <div class="label">{lbl}</div>
+                        <div class="value" style="color:{clr}; font-size:1.5rem;">{val}</div>
+                    </div>""", unsafe_allow_html=True)
+
+                # ── Charts ─────────────────────────────────────────────────────
+                ch1, ch2 = st.columns(2)
+                with ch1:
+                    cat_counts = df_result['WQI_Category'].value_counts().reset_index()
+                    cat_counts.columns = ['Category','Count']
+                    fig_pie = px.pie(cat_counts, names='Category', values='Count',
+                                     color='Category', color_discrete_map=CAT_COLOR_MAP,
+                                     title='WQI Category Distribution', hole=0.4)
+                    fig_pie.update_traces(textinfo='label+percent')
+                    fig_pie.update_layout(template='plotly_white', height=320, showlegend=False)
+                    st.plotly_chart(fig_pie, use_container_width=True)
+
+                with ch2:
+                    fig_hist = px.histogram(df_result, x='Predicted_WQI', nbins=30,
+                                            color_discrete_sequence=['#1565C0'],
+                                            title='WQI Score Distribution',
+                                            labels={'Predicted_WQI': 'WQI Score'})
+                    fig_hist.add_vline(x=df_result['Predicted_WQI'].mean(),
+                                      line_dash='dash', line_color='#FF6F00',
+                                      annotation_text=f"Mean: {df_result['Predicted_WQI'].mean():.1f}")
+                    fig_hist.update_layout(template='plotly_white', height=320)
+                    st.plotly_chart(fig_hist, use_container_width=True)
+
+                # ── Full Results Table ─────────────────────────────────────────
+                st.markdown('<div class="section-title">📋 Full Prediction Results</div>', unsafe_allow_html=True)
+
+                # Color the WQI column
+                def color_wqi_row(row):
+                    color_map = {
+                        'Excellent': '#E8F5E9', 'Good': '#F1F8E9',
+                        'Poor': '#FFF3E0', 'Very Poor': '#FFEBEE',
+                        'Unfit for Drinking': '#FCE4EC'
+                    }
+                    bg = color_map.get(row['WQI_Category'], 'white')
+                    return [f'background-color: {bg}'] * len(row)
+
+                display_cols = REQUIRED + ['Predicted_WQI', 'WQI_Category', 'Confidence_%']
+                display_cols = [c for c in display_cols if c in df_result.columns]
+
+                st.dataframe(
+                    df_result[display_cols].style.apply(color_wqi_row, axis=1),
+                    use_container_width=True, height=400
+                )
+
+                # ── Download Results ───────────────────────────────────────────
+                st.markdown("")
+                dl1, dl2 = st.columns(2)
+                with dl1:
+                    csv_out = df_result.to_csv(index=False).encode('utf-8')
+                    st.download_button(
+                        label="⬇️ Download Results as CSV",
+                        data=csv_out,
+                        file_name="aquavision_bulk_results.csv",
+                        mime="text/csv",
+                        use_container_width=True,
+                        type="primary"
+                    )
+                with dl2:
+                    buf2 = io.BytesIO()
+                    df_result.to_excel(buf2, index=False, engine='openpyxl')
+                    st.download_button(
+                        label="⬇️ Download Results as Excel",
+                        data=buf2.getvalue(),
+                        file_name="aquavision_bulk_results.xlsx",
+                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        use_container_width=True
+                    )
+
+        except Exception as e:
+            st.error(f"❌ Error processing file: {e}")
+            st.info("Please make sure your file matches the required format. Download the sample file for reference.")
+
+
 st.markdown("---")
 st.markdown("""
 <div style='text-align:center; color:#888; font-size:0.85rem; padding:1rem'>
