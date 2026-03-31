@@ -33,87 +33,192 @@ st.set_page_config(
 # ── Custom CSS ────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
-    html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
+    /* Use system fonts for guaranteed rendering */
+    html, body, [class*="css"], .stMarkdown, .stText, p, div, span, h1, h2, h3 {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+    }
+    
     .main { background: #F0F8FF; }
+    
     .hero-banner {
         background: linear-gradient(135deg, #0D47A1 0%, #006064 50%, #1B5E20 100%);
-        padding: 2.5rem 2rem; border-radius: 16px; text-align: center;
-        margin-bottom: 1.5rem; box-shadow: 0 8px 32px rgba(13,71,161,0.3);
+        padding: 2.5rem 2rem;
+        border-radius: 16px;
+        text-align: center;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 8px 32px rgba(13,71,161,0.3);
     }
-    .hero-banner h1 { font-size: 3rem; font-weight: 800; color: white; margin: 0; letter-spacing: -1px; }
-    .hero-banner p  { font-size: 1.1rem; color: rgba(255,255,255,0.85); margin: 0.5rem 0 0; }
+    .hero-banner h1 {
+        font-size: 2.8rem;
+        font-weight: 800;
+        color: white !important;
+        margin: 0;
+        letter-spacing: -1px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+    }
+    .hero-banner p {
+        font-size: 1.1rem;
+        color: rgba(255,255,255,0.9) !important;
+        margin: 0.5rem 0 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+    }
+
     .metric-card {
-        background: white; border-radius: 12px; padding: 1.2rem 1.5rem;
-        box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-left: 5px solid #1565C0; margin-bottom: 0.8rem;
+        background: white;
+        border-radius: 12px;
+        padding: 1.2rem 1.5rem;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        border-left: 5px solid #1565C0;
+        margin-bottom: 0.8rem;
     }
-    .metric-card .label { font-size: 0.8rem; color: #666; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-    .metric-card .value { font-size: 2rem; font-weight: 800; color: #0D47A1; }
-    .metric-card .sub   { font-size: 0.8rem; color: #888; }
+    .metric-card .label {
+        font-size: 0.8rem;
+        color: #555 !important;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+    }
+    .metric-card .value {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #0D47A1 !important;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+    }
+    .metric-card .sub {
+        font-size: 0.8rem;
+        color: #777 !important;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+    }
     .wqi-badge {
-        display: inline-block; padding: 0.4rem 1.2rem; border-radius: 50px;
-        font-size: 1rem; font-weight: 700; color: white; margin-top: 0.5rem;
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: 700;
+        color: white !important;
+        margin-top: 0.5rem;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
     }
     .predict-box {
-        background: linear-gradient(135deg, #E3F2FD, #E8F5E9); border-radius: 16px;
-        padding: 2rem; border: 2px solid #90CAF9; box-shadow: 0 4px 20px rgba(21,101,192,0.15);
+        background: linear-gradient(135deg, #E3F2FD, #E8F5E9);
+        border-radius: 16px;
+        padding: 2rem;
+        border: 2px solid #90CAF9;
+        box-shadow: 0 4px 20px rgba(21,101,192,0.15);
+        margin-bottom: 1.5rem;
     }
-    .section-title {
-        font-size: 1.4rem; font-weight: 700; color: #0D47A1;
-        margin: 1.5rem 0 1rem; padding-left: 0.8rem; border-left: 4px solid #1565C0;
-    }
-    div[data-testid="stSidebar"] { background: linear-gradient(180deg, #0D47A1 0%, #006064 100%); }
-    div[data-testid="stSidebar"] * { color: white !important; }
     
-    /* Bulk Scanner Styles */
-    .bulk-section {
-        background: white; border-radius: 14px; padding: 2rem;
-        box-shadow: 0 4px 20px rgba(13,71,161,0.1); margin: 1.5rem 0;
+    /* Section title - highly visible */
+    .section-title {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: #0D47A1 !important;
+        margin: 1.5rem 0 1rem;
+        padding: 0.6rem 0.8rem;
+        border-left: 5px solid #1565C0;
+        background: #EEF4FF;
+        border-radius: 0 8px 8px 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
     }
+    
+    /* Sidebar */
+    div[data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #0D47A1 0%, #006064 100%);
+    }
+    div[data-testid="stSidebar"] .stMarkdown p,
+    div[data-testid="stSidebar"] .stMarkdown,
+    div[data-testid="stSidebar"] label,
+    div[data-testid="stSidebar"] .stSelectbox label,
+    div[data-testid="stSidebar"] span {
+        color: white !important;
+    }
+    div[data-testid="stSidebar"] h2 {
+        color: white !important;
+        font-weight: 800 !important;
+    }
+    
+    /* Input labels - make them clearly visible */
+    .stNumberInput label,
+    .stTextInput label,
+    .stSelectbox label,
+    .stSlider label,
+    .stMultiSelect label {
+        font-size: 0.95rem !important;
+        font-weight: 600 !important;
+        color: #1a1a2e !important;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+    }
+    
+    /* Param cards */
+    .param-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.2rem 1rem;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
+    .param-card .p-label {
+        font-size: 0.75rem;
+        color: #555 !important;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+    }
+    .param-card .p-value {
+        font-size: 1.8rem;
+        font-weight: 800;
+        margin: 0.5rem 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+    }
+    .param-card .p-unit {
+        font-size: 0.75rem;
+        color: #777 !important;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+    }
+
+    /* Bulk scanner */
     .bulk-header {
-        font-size: 1.3rem; font-weight: 700; color: #0D47A1;
-        margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #0D47A1 !important;
+        margin-bottom: 0.8rem;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
     }
     .upload-box {
-        border: 2.5px dashed #4ECDC4; border-radius: 14px;
-        padding: 2.5rem; text-align: center; background: #F0FFFE;
-        transition: all 0.3s ease;
+        border: 2.5px dashed #4ECDC4;
+        border-radius: 14px;
+        padding: 2.5rem;
+        text-align: center;
+        background: #F0FFFE;
     }
-    .upload-box:hover { border-color: #0D47A1; background: #E3F2FD; }
-    .sample-btn {
-        background: linear-gradient(135deg, #006064, #00897B);
-        color: white; padding: 0.7rem 1.5rem; border-radius: 8px;
-        border: none; font-weight: 600; cursor: pointer;
-        box-shadow: 0 4px 12px rgba(0,96,100,0.25);
+    
+    /* Tab labels */
+    .stTabs [data-baseweb="tab"] {
+        font-size: 0.95rem !important;
+        font-weight: 600 !important;
+        color: #333 !important;
     }
-    .sample-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,96,100,0.35); }
-    .scan-btn {
-        background: linear-gradient(135deg, #1B5E20, #2E7D32) !important;
-        color: white !important; padding: 0.8rem 2rem !important; border-radius: 8px !important;
-        border: none !important; font-weight: 700 !important; font-size: 1rem !important;
-        cursor: pointer !important;
-        box-shadow: 0 4px 12px rgba(27,94,32,0.3) !important;
+    .stTabs [aria-selected="true"] {
+        color: #0D47A1 !important;
+        font-weight: 700 !important;
     }
-    .results-table {
-        background: white; border-radius: 12px; overflow: hidden;
-        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    
+    /* General text visibility */
+    .stMarkdown p {
+        color: #1a1a2e !important;
+        font-size: 1rem;
     }
-    .status-badge {
-        padding: 0.35rem 1rem; border-radius: 50px; font-weight: 600;
-        font-size: 0.85rem; text-align: center;
-    }
-    .status-excellent { background: #C8E6C9; color: #1B5E20; }
-    .status-good { background: #C8E6C9; color: #2E7D32; }
-    .status-poor { background: #FFE0B2; color: #E65100; }
-    .status-very-poor { background: #FFCDD2; color: #C62828; }
-    .status-unfit { background: #F8BBD0; color: #880E4F; }
-    .progress-bar {
-        background: #E0E0E0; border-radius: 10px; height: 8px;
-        overflow: hidden; margin: 0.5rem 0;
-    }
-    .progress-fill {
-        height: 100%; background: linear-gradient(90deg, #4ECDC4, #0D47A1);
-        border-radius: 10px; transition: width 0.3s ease;
+    
+    /* Footer */
+    .footer-text {
+        text-align: center;
+        color: #666 !important;
+        font-size: 0.85rem;
+        padding: 1rem;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -173,7 +278,6 @@ def engineer_single(row_dict):
     return [d[f] for f in FEATURES]
 
 def create_sample_csv():
-    """Generate sample CSV for bulk scanning"""
     sample_data = {
         'location': ['Sample Site 1', 'Sample Site 2', 'Sample Site 3'],
         'state': ['Gujarat', 'Maharashtra', 'Karnataka'],
@@ -190,26 +294,19 @@ def create_sample_csv():
     return df.to_csv(index=False).encode('utf-8')
 
 def validate_bulk_data(df):
-    """Validate bulk upload data"""
     required_cols = ['temp','do','ph','conductivity','bod','nitrate','fecal_coliform','total_coliform']
     missing = [c for c in required_cols if c not in df.columns]
-    
     if missing:
         return False, f"Missing columns: {', '.join(missing)}"
-    
-    # Check for numeric data
     for col in required_cols:
         try:
             pd.to_numeric(df[col], errors='coerce')
         except:
             return False, f"Column '{col}' contains non-numeric values"
-    
     return True, "Validation successful"
 
 def predict_batch_wqi(df, reg_model, clf_model, scaler, label_enc):
-    """Batch predict WQI for multiple records"""
     results = []
-    
     for idx, row in df.iterrows():
         try:
             row_dict = row.to_dict()
@@ -217,7 +314,6 @@ def predict_batch_wqi(df, reg_model, clf_model, scaler, label_enc):
             wqi_pred = float(reg_model.predict(feat_scaled)[0])
             cat_pred = label_enc.inverse_transform(clf_model.predict(feat_scaled))[0]
             cat_prob = float(clf_model.predict_proba(feat_scaled)[0].max())
-            
             results.append({
                 'Location': row.get('location', f'Row {idx+1}'),
                 'State': row.get('state', 'N/A'),
@@ -239,7 +335,6 @@ def predict_batch_wqi(df, reg_model, clf_model, scaler, label_enc):
                 'Category': 'Processing Error',
                 'Confidence': '0%'
             })
-    
     return pd.DataFrame(results)
 
 
@@ -321,10 +416,10 @@ with st.sidebar:
     sel_state = st.selectbox("State", states_avail)
     st.divider()
     st.markdown("**ℹ️ WQI Scale**")
-    for cat, col in [('< 25 — Excellent','#1B5E20'),('25–50 — Good','#4CAF50'),
-                      ('50–75 — Poor','#FF9800'),('75–100 — Very Poor','#F44336'),
-                      ('> 100 — Unfit','#880E4F')]:
-        st.markdown(f"<span style='color:{col};font-weight:600'>■</span> {cat}", unsafe_allow_html=True)
+    for cat, col in [('< 25 — Excellent','#90EE90'),('25–50 — Good','#98FB98'),
+                      ('50–75 — Poor','#FFD700'),('75–100 — Very Poor','#FF6347'),
+                      ('> 100 — Unfit','#FF69B4')]:
+        st.markdown(f"<span style='color:{col};font-size:1.2rem'>■</span> <span style='color:white;font-weight:600'>{cat}</span>", unsafe_allow_html=True)
 
 mask = (df['year'] >= year_range[0]) & (df['year'] <= year_range[1])
 if sel_state != 'All':
@@ -339,7 +434,7 @@ if page == "🏠 Dashboard":
     st.markdown("""
     <div class="hero-banner">
         <h1>💧 AquaVision</h1>
-        <p>Water Quality Index Analysis & Predictive Intelligence Platform</p>
+        <p>Water Quality Index Analysis &amp; Predictive Intelligence Platform</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -359,7 +454,7 @@ if page == "🏠 Dashboard":
             <div class="sub">{sub}</div>
         </div>""", unsafe_allow_html=True)
 
-    st.markdown('<div class="section-title">WQI Category Breakdown</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">📊 WQI Category Breakdown</div>', unsafe_allow_html=True)
     col1, col2 = st.columns(2)
     with col1:
         cat_cnt = dff['WQI_Category'].value_counts().reset_index()
@@ -368,7 +463,8 @@ if page == "🏠 Dashboard":
                      color='Category', color_discrete_map=CAT_COLOR_MAP,
                      title='Distribution of WQI Categories', hole=0.42)
         fig.update_traces(textinfo='label+percent', pull=[0.04]*len(cat_cnt))
-        fig.update_layout(template='plotly_white', showlegend=True, height=380)
+        fig.update_layout(template='plotly_white', showlegend=True, height=380,
+                          font=dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial", size=13))
         st.plotly_chart(fig, use_container_width=True)
     with col2:
         yr_wqi = dff.groupby('year')['WQI'].agg(['mean','std']).reset_index()
@@ -381,37 +477,30 @@ if page == "🏠 Dashboard":
         fig.add_trace(go.Scatter(x=yr_wqi['year'], y=yr_wqi['mean'], mode='lines+markers',
                                  line=dict(color='#1565C0', width=3), marker=dict(size=7), name='Mean WQI'))
         fig.update_layout(title='Year-wise WQI Trend', xaxis_title='Year',
-                          yaxis_title='WQI Score', template='plotly_white', height=380)
+                          yaxis_title='WQI Score', template='plotly_white', height=380,
+                          font=dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial", size=13))
         st.plotly_chart(fig, use_container_width=True)
 
-    st.markdown('<div class="section-title">Parameter Overview</div>', unsafe_allow_html=True)
-    
+    st.markdown('<div class="section-title">🧪 Parameter Overview</div>', unsafe_allow_html=True)
+
     param_info = {
-        'temp': ('Temperature', '°C', '#FF6B6B'),
-        'do': ('Dissolved Oxygen', 'mg/L', '#4ECDC4'),
-        'ph': ('pH Level', 'pH', '#45B7D1'),
-        'conductivity': ('Conductivity', 'µS/cm', '#FFA07A'),
-        'bod': ('BOD', 'mg/L', '#98D8C8'),
-        'nitrate': ('Nitrate', 'mg/L', '#F7DC6F')
+        'temp': ('🌡️ Temperature', '°C', '#FF6B6B'),
+        'do': ('💨 Dissolved Oxygen', 'mg/L', '#4ECDC4'),
+        'ph': ('⚗️ pH Level', 'pH', '#45B7D1'),
+        'conductivity': ('⚡ Conductivity', 'µS/cm', '#FFA07A'),
+        'bod': ('🦠 BOD', 'mg/L', '#98D8C8'),
+        'nitrate': ('🧪 Nitrate', 'mg/L', '#F7DC6F')
     }
-    
+
     cols = st.columns(6)
     for i, (col_name, (label, unit, color)) in enumerate(param_info.items()):
+        value = dff[col_name].mean()
         with cols[i]:
-            value = dff[col_name].mean()
             st.markdown(f"""
-            <div style='background: white; border-radius: 12px; padding: 1.2rem 1rem;
-                        box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-left: 5px solid {color};
-                        text-align: center;'>
-                <div style='font-size: 0.75rem; color: #666; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;'>
-                    {label}
-                </div>
-                <div style='font-size: 1.8rem; font-weight: 800; color: {color}; margin: 0.5rem 0;'>
-                    {value:.2f}
-                </div>
-                <div style='font-size: 0.75rem; color: #888;'>
-                    {unit}
-                </div>
+            <div class="param-card" style="border-left: 5px solid {color};">
+                <div class="p-label">{label}</div>
+                <div class="p-value" style="color: {color};">{value:.2f}</div>
+                <div class="p-unit">{unit}</div>
             </div>
             """, unsafe_allow_html=True)
 
@@ -423,6 +512,7 @@ elif page == "🔬 Exploratory Analysis":
     st.markdown('<div class="section-title">🔬 Exploratory Data Analysis</div>', unsafe_allow_html=True)
     tab1, tab2, tab3, tab4 = st.tabs(["📊 Distributions", "🔥 Correlations", "📦 Boxplots", "🔵 PCA"])
     num_cols_list = ['temp','do','ph','conductivity','bod','nitrate','fecal_coliform','total_coliform']
+    font_cfg = dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial", size=13)
 
     with tab1:
         selected_param = st.selectbox("Select Parameter", num_cols_list)
@@ -435,7 +525,7 @@ elif page == "🔬 Exploratory Analysis":
             sub = dff[dff['WQI_Category']==cat][selected_param]
             if len(sub) > 0:
                 fig.add_trace(go.Box(y=sub, name=cat, marker_color=color), row=1, col=2)
-        fig.update_layout(template='plotly_white', height=420, showlegend=False)
+        fig.update_layout(template='plotly_white', height=420, showlegend=False, font=font_cfg)
         st.plotly_chart(fig, use_container_width=True)
 
     with tab2:
@@ -443,7 +533,7 @@ elif page == "🔬 Exploratory Analysis":
         fig = px.imshow(corr_matrix, text_auto='.2f', aspect='auto',
                         color_continuous_scale='RdBu_r', zmin=-1, zmax=1,
                         title='Feature Correlation Heatmap')
-        fig.update_layout(template='plotly_white', height=520)
+        fig.update_layout(template='plotly_white', height=520, font=font_cfg)
         st.plotly_chart(fig, use_container_width=True)
 
     with tab3:
@@ -456,7 +546,7 @@ elif page == "🔬 Exploratory Analysis":
                     fig.add_trace(go.Box(y=sub, name=cat, marker_color=color,
                                          showlegend=(idx==0)), row=r+1, col=c+1)
         fig.update_layout(template='plotly_white', height=580,
-                          title_text='Parameter Distribution by WQI Category')
+                          title_text='Parameter Distribution by WQI Category', font=font_cfg)
         st.plotly_chart(fig, use_container_width=True)
 
     with tab4:
@@ -472,14 +562,14 @@ elif page == "🔬 Exploratory Analysis":
                                 color='Category', color_discrete_map=CAT_COLOR_MAP,
                                 opacity=0.65, size_max=6,
                                 title=f'PCA 3D — {sum(pca.explained_variance_ratio_)*100:.1f}% Variance Explained')
-            fig.update_layout(height=520)
+            fig.update_layout(height=520, font=font_cfg)
             st.plotly_chart(fig, use_container_width=True)
         with col_pca2:
             ev = pca.explained_variance_ratio_ * 100
             fig = go.Figure(go.Bar(x=[f'PC{i+1}' for i in range(3)], y=ev,
                                    marker_color=['#0D47A1','#1565C0','#42A5F5'],
                                    text=[f'{v:.1f}%' for v in ev], textposition='outside'))
-            fig.update_layout(title='Explained Variance', template='plotly_white', height=300)
+            fig.update_layout(title='Explained Variance', template='plotly_white', height=300, font=font_cfg)
             st.plotly_chart(fig, use_container_width=True)
 
 
@@ -489,6 +579,7 @@ elif page == "🔬 Exploratory Analysis":
 elif page == "📈 Trends & Patterns":
     st.markdown('<div class="section-title">📈 Trends & Pattern Analysis</div>', unsafe_allow_html=True)
     tab1, tab2 = st.tabs(["⏳ Time Trends", "🌊 Parameter Deep-Dive"])
+    font_cfg = dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial", size=13)
 
     with tab1:
         params_sel = st.multiselect("Select parameters to plot",
@@ -502,13 +593,13 @@ elif page == "📈 Trends & Patterns":
                                      line=dict(width=2.5, color=px.colors.qualitative.Bold[i % 10]),
                                      marker=dict(size=7)))
         fig.update_layout(title='Year-wise Multi-Parameter Trends',
-                          xaxis_title='Year', template='plotly_white', height=450)
+                          xaxis_title='Year', template='plotly_white', height=450, font=font_cfg)
         st.plotly_chart(fig, use_container_width=True)
 
         cat_yr = dff.groupby(['year','WQI_Category']).size().reset_index(name='count')
         fig2 = px.area(cat_yr, x='year', y='count', color='WQI_Category',
                        color_discrete_map=CAT_COLOR_MAP, title='WQI Category Composition Over Years')
-        fig2.update_layout(template='plotly_white', height=380)
+        fig2.update_layout(template='plotly_white', height=380, font=font_cfg)
         st.plotly_chart(fig2, use_container_width=True)
 
     with tab2:
@@ -518,32 +609,31 @@ elif page == "📈 Trends & Patterns":
         fig = px.bar(state_param.reset_index(), x='state', y=param_dd,
                      title=f'Top {top_n} States by avg {param_dd.upper()}',
                      color=param_dd, color_continuous_scale='Blues', text_auto='.2f')
-        fig.update_layout(template='plotly_white', height=400)
+        fig.update_layout(template='plotly_white', height=400, font=font_cfg)
         st.plotly_chart(fig, use_container_width=True)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# PAGE: BULK SCANNER ⭐ NEW FEATURE
+# PAGE: BULK SCANNER
 # ══════════════════════════════════════════════════════════════════════════════
 elif page == "📊 Bulk Scanner":
     st.markdown("""
     <div class="hero-banner">
         <h1>📊 Bulk WQI Scanner</h1>
-        <p>Batch Process & Predict Water Quality Index for Multiple Samples</p>
+        <p>Batch Process &amp; Predict Water Quality Index for Multiple Samples</p>
     </div>
     """, unsafe_allow_html=True)
-    
-    # Initialize session state for bulk scanner
+
     if 'bulk_results' not in st.session_state:
         st.session_state.bulk_results = None
     if 'scan_count' not in st.session_state:
         st.session_state.scan_count = 0
-    
-    # Three-column section
+
     col_download, col_spacer, col_upload, col_spacer2, col_download_results = st.columns([1.2, 0.3, 1.2, 0.3, 1.2])
-    
+
     with col_download:
-        st.markdown('<div class="bulk-header">📥 Download Sample File</div>', unsafe_allow_html=True)
+        st.markdown('<div class="bulk-header">📥 Step 1: Download Sample File</div>', unsafe_allow_html=True)
+        st.write("Download this template to see the required format for your data.")
         if st.download_button(
             label="📄 Download Sample CSV",
             data=create_sample_csv(),
@@ -553,20 +643,19 @@ elif page == "📊 Bulk Scanner":
             key="sample_download"
         ):
             st.success("✅ Sample file ready!")
-    
+
     with col_upload:
-        st.markdown('<div class="bulk-header">📤 Upload Your Data</div>', unsafe_allow_html=True)
-        st.markdown('<div class="upload-box">', unsafe_allow_html=True)
+        st.markdown('<div class="bulk-header">📤 Step 2: Upload Your Data</div>', unsafe_allow_html=True)
+        st.write("Upload a CSV or Excel file with the required water quality columns.")
         uploaded_file = st.file_uploader(
-            "Drag and drop or browse",
+            "Drag and drop or browse (CSV, XLSX, XLS — max 200MB)",
             type=['csv', 'xlsx', 'xls'],
             key='bulk_upload',
-            help='CSV, XLSX, XLS formats supported. Max 200MB'
         )
-        st.markdown('</div>', unsafe_allow_html=True)
-    
+
     with col_download_results:
-        st.markdown('<div class="bulk-header">📊 Download Results</div>', unsafe_allow_html=True)
+        st.markdown('<div class="bulk-header">📊 Step 3: Download Results</div>', unsafe_allow_html=True)
+        st.write("After scanning, download the full predictions as a CSV file.")
         if st.session_state.bulk_results is not None:
             csv_data = st.session_state.bulk_results.to_csv(index=False).encode('utf-8')
             if st.download_button(
@@ -579,210 +668,129 @@ elif page == "📊 Bulk Scanner":
             ):
                 st.success("✅ Results downloaded!")
         else:
-            st.button("📥 Download Results", disabled=True, use_container_width=True)
-    
+            st.button("📥 Download Results (scan first)", disabled=True, use_container_width=True)
+
     st.divider()
-    
-    # File processing section
+
     if uploaded_file is not None:
         st.markdown('<div class="section-title">📋 File Preview & Validation</div>', unsafe_allow_html=True)
-        
         try:
             if uploaded_file.name.endswith('.csv'):
                 df_upload = pd.read_csv(uploaded_file)
             else:
                 df_upload = pd.read_excel(uploaded_file)
-            
+
             col_info1, col_info2, col_info3 = st.columns(3)
-            with col_info1:
-                st.metric("📊 Total Records", len(df_upload))
-            with col_info2:
-                st.metric("📈 Total Columns", len(df_upload.columns))
-            with col_info3:
-                st.metric("✓ File Size", f"{uploaded_file.size / 1024:.1f} KB")
-            
-            # Validate data
+            col_info1.metric("📊 Total Records", len(df_upload))
+            col_info2.metric("📈 Total Columns", len(df_upload.columns))
+            col_info3.metric("✓ File Size", f"{uploaded_file.size / 1024:.1f} KB")
+
             is_valid, validation_msg = validate_bulk_data(df_upload)
-            
+
             if is_valid:
                 st.success(f"✅ {validation_msg}")
-                
-                st.markdown('<div class="section-title">Preview Data (First 5 Rows)</div>', unsafe_allow_html=True)
+                st.markdown("**Preview — First 5 Rows:**")
                 st.dataframe(df_upload.head(), use_container_width=True)
-                
-                # Scan button
+
                 col_btn1, col_btn2, col_btn3 = st.columns([2, 1, 2])
                 with col_btn2:
-                    scan_button = st.button(
-                        "🚀 SCAN & PREDICT WQI",
-                        type="primary",
-                        use_container_width=True,
-                        key="scan_btn"
-                    )
-                
+                    scan_button = st.button("🚀 SCAN & PREDICT WQI", type="primary",
+                                            use_container_width=True, key="scan_btn")
+
                 if scan_button:
-                    with st.spinner('⏳ Processing your data... This may take a moment...'):
+                    with st.spinner('⏳ Processing your data...'):
                         st.session_state.bulk_results = predict_batch_wqi(
                             df_upload, reg_model, clf_model, scaler, label_enc
                         )
                         st.session_state.scan_count = len(st.session_state.bulk_results)
-                    
-                    st.success(f"✅ Scan completed! Processed {st.session_state.scan_count} records")
+                    st.success(f"✅ Scan completed! Processed {st.session_state.scan_count} records.")
             else:
                 st.error(f"❌ Validation Error: {validation_msg}")
-                st.info("Please ensure your CSV has all required columns: temp, do, ph, conductivity, bod, nitrate, fecal_coliform, total_coliform")
-        
+                st.info("Required columns: temp, do, ph, conductivity, bod, nitrate, fecal_coliform, total_coliform")
         except Exception as e:
             st.error(f"❌ Error processing file: {str(e)}")
-    
-    # Results display section
+
     if st.session_state.bulk_results is not None:
         st.markdown('<div class="section-title">📊 Scan Results</div>', unsafe_allow_html=True)
-        
         results_df = st.session_state.bulk_results.copy()
-        
-        # Summary statistics
+        font_cfg = dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial", size=13)
+
         col_stat1, col_stat2, col_stat3, col_stat4 = st.columns(4)
-        
-        with col_stat1:
-            avg_wqi = pd.to_numeric(results_df['WQI_Score'], errors='coerce').mean()
-            st.metric("📊 Average WQI", f"{avg_wqi:.2f}", delta="Quality Score")
-        
-        with col_stat2:
-            excellent_count = len(results_df[results_df['Category'] == 'Excellent'])
-            st.metric("💚 Excellent", excellent_count, delta="High Quality")
-        
-        with col_stat3:
-            poor_count = len(results_df[results_df['Category'].isin(['Poor', 'Very Poor', 'Unfit for Drinking'])])
-            st.metric("⚠️ Needs Attention", poor_count, delta="Action Required")
-        
-        with col_stat4:
-            success_rate = len(results_df[results_df['Category'] != 'Processing Error']) / len(results_df) * 100
-            st.metric("✅ Success Rate", f"{success_rate:.1f}%", delta="Processing")
-        
+        avg_wqi = pd.to_numeric(results_df['WQI_Score'], errors='coerce').mean()
+        excellent_count = len(results_df[results_df['Category'] == 'Excellent'])
+        poor_count = len(results_df[results_df['Category'].isin(['Poor', 'Very Poor', 'Unfit for Drinking'])])
+        success_rate = len(results_df[results_df['Category'] != 'Processing Error']) / len(results_df) * 100
+
+        col_stat1.metric("📊 Average WQI", f"{avg_wqi:.2f}")
+        col_stat2.metric("💚 Excellent Quality", excellent_count)
+        col_stat3.metric("⚠️ Needs Attention", poor_count)
+        col_stat4.metric("✅ Success Rate", f"{success_rate:.1f}%")
+
         st.divider()
-        
-        # Results table with category badges
-        st.markdown('<div class="section-title">Detailed Results Table</div>', unsafe_allow_html=True)
-        
-        # Create styled dataframe
-        display_df = results_df.copy()
-        
-        # Color the Category column
-        def style_category(val):
-            if val == 'Excellent':
-                return 'background-color: #C8E6C9; color: #1B5E20; font-weight: 600'
-            elif val == 'Good':
-                return 'background-color: #C8E6C9; color: #2E7D32; font-weight: 600'
-            elif val == 'Poor':
-                return 'background-color: #FFE0B2; color: #E65100; font-weight: 600'
-            elif val == 'Very Poor':
-                return 'background-color: #FFCDD2; color: #C62828; font-weight: 600'
-            elif val == 'Unfit for Drinking':
-                return 'background-color: #F8BBD0; color: #880E4F; font-weight: 600'
-            else:
-                return 'background-color: #EEEEEE; color: #666; font-weight: 600'
-        
-        styled_df = display_df.style.applymap(lambda x: style_category(x) if isinstance(x, str) else '', 
-                                              subset=['Category'])
-        
-        st.dataframe(
-            display_df,
-            use_container_width=True,
-            height=400,
-            column_config={
-                'WQI_Score': st.column_config.NumberColumn(format="%.2f"),
-                'Confidence': st.column_config.TextColumn()
-            }
-        )
-        
+        st.markdown("**Detailed Results Table:**")
+        st.dataframe(results_df, use_container_width=True, height=400,
+                     column_config={'WQI_Score': st.column_config.NumberColumn(format="%.2f")})
         st.divider()
-        
-        # Visualizations
+
         st.markdown('<div class="section-title">📈 Results Visualization</div>', unsafe_allow_html=True)
-        
         col_chart1, col_chart2 = st.columns(2)
-        
+
         with col_chart1:
-            # Category distribution
             cat_dist = results_df['Category'].value_counts().reset_index()
             cat_dist.columns = ['Category', 'Count']
             cat_dist = cat_dist[cat_dist['Category'] != 'Processing Error']
-            
-            fig = px.bar(
-                cat_dist, 
-                x='Category', 
-                y='Count',
-                color='Category',
-                color_discrete_map=CAT_COLOR_MAP,
-                title='WQI Category Distribution',
-                text_auto=True
-            )
-            fig.update_layout(template='plotly_white', height=380, showlegend=False)
+            fig = px.bar(cat_dist, x='Category', y='Count', color='Category',
+                         color_discrete_map=CAT_COLOR_MAP, title='WQI Category Distribution', text_auto=True)
+            fig.update_layout(template='plotly_white', height=380, showlegend=False, font=font_cfg)
             st.plotly_chart(fig, use_container_width=True)
-        
+
         with col_chart2:
-            # WQI score distribution
             wqi_scores = pd.to_numeric(results_df['WQI_Score'], errors='coerce').dropna()
-            
-            fig = px.histogram(
-                x=wqi_scores,
-                nbins=30,
-                title='WQI Score Distribution',
-                labels={'x': 'WQI Score', 'count': 'Frequency'}
-            )
+            fig = px.histogram(x=wqi_scores, nbins=30, title='WQI Score Distribution',
+                               labels={'x': 'WQI Score', 'count': 'Frequency'})
             fig.update_traces(marker_color='#1565C0')
-            fig.update_layout(template='plotly_white', height=380)
+            fig.update_layout(template='plotly_white', height=380, font=font_cfg)
             st.plotly_chart(fig, use_container_width=True)
-        
-        # State-wise analysis if location data exists
+
         if 'State' in results_df.columns and results_df['State'].notna().sum() > 0:
             st.markdown('<div class="section-title">🗺️ State-wise Summary</div>', unsafe_allow_html=True)
-            
-            state_summary = results_df.groupby('State').agg({
-                'WQI_Score': lambda x: pd.to_numeric(x, errors='coerce').mean(),
-                'Category': 'count'
-            }).round(2)
+            state_summary = results_df.groupby('State').agg(
+                {'WQI_Score': lambda x: pd.to_numeric(x, errors='coerce').mean(),
+                 'Category': 'count'}
+            ).round(2)
             state_summary.columns = ['Avg_WQI', 'Sample_Count']
             state_summary = state_summary.sort_values('Avg_WQI')
-            
-            fig = px.bar(
-                state_summary.reset_index(),
-                x='State',
-                y='Avg_WQI',
-                color='Avg_WQI',
-                color_continuous_scale='RdYlGn_r',
-                title='Average WQI by State',
-                text_auto='.2f'
-            )
-            fig.update_layout(template='plotly_white', height=350)
+            fig = px.bar(state_summary.reset_index(), x='State', y='Avg_WQI',
+                         color='Avg_WQI', color_continuous_scale='RdYlGn_r',
+                         title='Average WQI by State', text_auto='.2f')
+            fig.update_layout(template='plotly_white', height=350, font=font_cfg)
             st.plotly_chart(fig, use_container_width=True)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# PAGE: PREDICTOR
+# PAGE: WQI PREDICTOR
 # ══════════════════════════════════════════════════════════════════════════════
 elif page == "🤖 WQI Predictor":
     st.markdown('<div class="section-title">🤖 AI-Powered WQI Predictor</div>', unsafe_allow_html=True)
-    st.markdown("Enter water parameter values below to predict the Water Quality Index:")
-    st.markdown('<div class="predict-box">', unsafe_allow_html=True)
+    st.write("Enter water parameter values below to predict the Water Quality Index:")
 
+    st.markdown('<div class="predict-box">', unsafe_allow_html=True)
     col1, col2, col3 = st.columns(3)
     with col1:
         temp    = st.number_input("🌡️ Temperature (°C)",           0.0, 50.0,     25.0, 0.1)
         do      = st.number_input("💨 Dissolved Oxygen (mg/L)",    0.0, 20.0,      7.5, 0.1)
-        ph      = st.number_input("⚗️ pH",                         0.0, 14.0,      7.0, 0.1)
+        ph      = st.number_input("⚗️ pH Level",                   0.0, 14.0,      7.0, 0.1)
     with col2:
         cond    = st.number_input("⚡ Conductivity (µmhos/cm)",    0.0, 5000.0,  250.0, 1.0)
         bod     = st.number_input("🦠 BOD (mg/L)",                 0.0, 100.0,     2.0, 0.1)
         nitrate = st.number_input("🧪 Nitrate (mg/L)",             0.0, 200.0,     5.0, 0.1)
     with col3:
         fecal   = st.number_input("🔬 Fecal Coliform (MPN/100mL)", 0.0, 200000.0,100.0, 1.0)
-        total   = st.number_input("🔬 Total Coliform (MPN/100mL)", 0.0, 200000.0,500.0, 1.0)
-
+        total   = st.number_input("🔭 Total Coliform (MPN/100mL)", 0.0, 200000.0,500.0, 1.0)
     st.markdown('</div>', unsafe_allow_html=True)
 
     if st.button("🚀 Predict Water Quality Index", use_container_width=True, type="primary"):
+        font_cfg = dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial", size=13)
         row = {'temp':temp,'do':do,'ph':ph,'conductivity':cond,
                'bod':bod,'nitrate':nitrate,'fecal_coliform':fecal,'total_coliform':total}
         feat_scaled = scaler.transform([engineer_single(row)])
@@ -813,7 +821,7 @@ elif page == "🤖 WQI Predictor":
                                  {'range':[100,120],'color':'#FCE4EC'}],
                        'threshold':{'line':{'color':'black','width':3},
                                     'thickness':0.8,'value':wqi_pred}}))
-            fig.update_layout(height=250, margin=dict(t=30,b=10,l=20,r=20))
+            fig.update_layout(height=250, margin=dict(t=30,b=10,l=20,r=20), font=font_cfg)
             st.plotly_chart(fig, use_container_width=True)
         with col_r3:
             probs = pd.DataFrame({'Category':label_enc.classes_,
@@ -822,7 +830,7 @@ elif page == "🤖 WQI Predictor":
                          title='Category Confidence (%)', color='Probability',
                          color_continuous_scale='Blues', text_auto='.1f')
             fig.update_layout(height=250, template='plotly_white',
-                              margin=dict(t=40,b=10), showlegend=False)
+                              margin=dict(t=40,b=10), showlegend=False, font=font_cfg)
             st.plotly_chart(fig, use_container_width=True)
 
         st.markdown("**📊 Your Sample vs Dataset Average**")
@@ -835,7 +843,7 @@ elif page == "🤖 WQI Predictor":
         fig = px.bar(compare, x='Parameter', y='Value', color='Source', barmode='group',
                      template='plotly_white', color_discrete_sequence=['#1565C0','#80DEEA'],
                      title='Input vs Dataset Average Comparison')
-        fig.update_layout(height=340)
+        fig.update_layout(height=340, font=font_cfg)
         st.plotly_chart(fig, use_container_width=True)
 
 
@@ -844,6 +852,7 @@ elif page == "🤖 WQI Predictor":
 # ══════════════════════════════════════════════════════════════════════════════
 elif page == "🗺️ State Intelligence":
     st.markdown('<div class="section-title">🗺️ State-wise Water Quality Intelligence</div>', unsafe_allow_html=True)
+    font_cfg = dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial", size=13)
 
     state_stats = dff.groupby('state').agg(
         avg_wqi=('WQI','mean'), min_wqi=('WQI','min'), max_wqi=('WQI','max'),
@@ -859,13 +868,13 @@ elif page == "🗺️ State Intelligence":
                      text='avg_wqi', labels={'avg_wqi':'Average WQI','state':'State'})
         fig.update_traces(texttemplate='%{text:.1f}', textposition='outside')
         fig.update_layout(template='plotly_white', height=450,
-                          xaxis={'categoryorder':'total descending'}, xaxis_tickangle=-35)
+                          xaxis={'categoryorder':'total descending'}, xaxis_tickangle=-35, font=font_cfg)
         st.plotly_chart(fig, use_container_width=True)
     with col2:
         fig2 = px.treemap(state_stats, path=['state'], values='records',
                           color='avg_wqi', color_continuous_scale='RdYlGn_r',
                           title='State Coverage', hover_data=['avg_wqi','category'])
-        fig2.update_layout(height=450)
+        fig2.update_layout(height=450, font=font_cfg)
         st.plotly_chart(fig2, use_container_width=True)
 
     st.markdown("**📋 State Summary Table**")
@@ -884,7 +893,7 @@ elif page == "🗺️ State Intelligence":
                                              opacity=0.6))
     fig_radar.update_layout(polar=dict(radialaxis=dict(visible=True)),
                              title='Top 5 States — Parameter Radar',
-                             template='plotly_white', height=420)
+                             template='plotly_white', height=420, font=font_cfg)
     st.plotly_chart(fig_radar, use_container_width=True)
 
 
@@ -919,7 +928,7 @@ elif page == "📋 Dataset Explorer":
 # ── Footer ─────────────────────────────────────────────────────────────────────
 st.markdown("---")
 st.markdown("""
-<div style='text-align:center; color:#888; font-size:0.85rem; padding:1rem'>
+<div class="footer-text">
     💧 <strong>AquaVision</strong> — Water Quality Intelligence Platform &nbsp;|&nbsp;
     Final Year Project &nbsp;|&nbsp; Built with Streamlit + XGBoost
 </div>
