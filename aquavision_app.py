@@ -801,8 +801,8 @@ elif page == "📊 Bulk Scanner":
     with col2:
         st.markdown('<div class="bulk-header">📤 Upload File</div>', unsafe_allow_html=True)
         uploaded_file = st.file_uploader(
-            "CSV or Excel",
-            type=['csv', 'xlsx', 'xls'],
+            "CSV, Excel, or JSON",
+            type=['csv', 'xlsx', 'xls', 'json'],
             key='bulk_upload',
         )
 
@@ -827,6 +827,8 @@ elif page == "📊 Bulk Scanner":
         try:
             if uploaded_file.name.endswith('.csv'):
                 df_upload = pd.read_csv(uploaded_file)
+            elif uploaded_file.name.endswith('.json'):
+                df_upload = pd.read_json(uploaded_file)
             else:
                 df_upload = pd.read_excel(uploaded_file)
 
