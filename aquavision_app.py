@@ -122,40 +122,94 @@ st.markdown("""
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
     }
 
-    /* ── SIDEBAR — ALL TEXT WHITE ─────────────────────────────────────────── */
+    /* ── SIDEBAR — ALL TEXT WHITE & HIGHLY VISIBLE ─────────────────────────── */
     div[data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #0D47A1 0%, #006064 100%);
+        background: linear-gradient(180deg, #0D47A1 0%, #006064 100%) !important;
     }
+    
+    /* Force all sidebar text to be bright white */
     div[data-testid="stSidebar"] * {
         color: white !important;
     }
+    
     div[data-testid="stSidebar"] h1,
     div[data-testid="stSidebar"] h2,
     div[data-testid="stSidebar"] h3,
     div[data-testid="stSidebar"] h4,
     div[data-testid="stSidebar"] p,
     div[data-testid="stSidebar"] span,
-    div[data-testid="stSidebar"] label,
-    div[data-testid="stSidebar"] div,
-    div[data-testid="stSidebar"] .stMarkdown,
-    div[data-testid="stSidebar"] .stMarkdown p,
+    div[data-testid="stSidebar"] label {
+        color: white !important;
+        font-weight: 600 !important;
+    }
+    
+    /* Selectbox styling in sidebar */
     div[data-testid="stSidebar"] .stSelectbox label,
     div[data-testid="stSidebar"] .stSlider label,
+    div[data-testid="stSidebar"] .stNumberInput label,
+    div[data-testid="stSidebar"] .stTextInput label {
+        color: white !important;
+        font-weight: 700 !important;
+        font-size: 0.95rem !important;
+    }
+    
+    /* Selectbox dropdown styling */
+    div[data-testid="stSidebar"] [data-baseweb="select"] {
+        background-color: rgba(255,255,255,0.12) !important;
+    }
+    
     div[data-testid="stSidebar"] [data-baseweb="select"] span,
     div[data-testid="stSidebar"] [data-baseweb="select"] div,
+    div[data-testid="stSidebar"] [data-baseweb="select"] > div {
+        color: white !important;
+    }
+    
+    div[data-testid="stSidebar"] .stSelectbox [data-baseweb="select"] > div {
+        background-color: rgba(255,255,255,0.15) !important;
+        border: 1.5px solid rgba(255,255,255,0.4) !important;
+        color: white !important;
+    }
+    
+    /* Slider styling */
     div[data-testid="stSidebar"] .stSlider [data-testid="stTickBarMin"],
     div[data-testid="stSidebar"] .stSlider [data-testid="stTickBarMax"] {
         color: white !important;
     }
-    div[data-testid="stSidebar"] .stSelectbox [data-baseweb="select"] > div {
-        background-color: rgba(255,255,255,0.15) !important;
-        border-color: rgba(255,255,255,0.3) !important;
-        color: white !important;
-    }
+    
+    /* Divider/HR styling */
     div[data-testid="stSidebar"] hr {
         border-color: rgba(255,255,255,0.3) !important;
     }
+    
+    /* Markdown text in sidebar */
+    div[data-testid="stSidebar"] .stMarkdown,
+    div[data-testid="stSidebar"] .stMarkdown p {
+        color: white !important;
+    }
+    
+    /* Input field styling in sidebar */
+    div[data-testid="stSidebar"] input,
+    div[data-testid="stSidebar"] textarea {
+        color: white !important;
+        background-color: rgba(255,255,255,0.1) !important;
+    }
+    
+    /* Ensure filter section headers are white */
+    div[data-testid="stSidebar"] strong {
+        color: white !important;
+    }
     /* ── END SIDEBAR ──────────────────────────────────────────────────────── */
+    
+    /* ── MAIN CONTENT AREA — ALL TEXT DARK & VISIBLE ─────────────────────── */
+    
+    /* Force all main area text to be dark/black for contrast */
+    .main {
+        background: #F0F8FF !important;
+    }
+    
+    .main * {
+        color: #1a1a2e !important;
+    }
     
     /* Input labels - make them clearly visible */
     .stNumberInput label,
@@ -164,10 +218,71 @@ st.markdown("""
     .stSlider label,
     .stMultiSelect label {
         font-size: 0.95rem !important;
-        font-weight: 600 !important;
-        color: #1a1a2e !important;
+        font-weight: 700 !important;
+        color: #0D47A1 !important;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
     }
+    
+    /* Make all headings visible */
+    .main h1,
+    .main h2,
+    .main h3,
+    .main h4,
+    .main h5,
+    .main h6 {
+        color: #0D47A1 !important;
+        font-weight: 800 !important;
+    }
+    
+    /* Paragraph text visibility */
+    .main p,
+    .main div,
+    .main span {
+        color: #1a1a2e !important;
+    }
+    
+    /* Button text */
+    .main button,
+    .stButton > button {
+        color: white !important;
+        font-weight: 600 !important;
+    }
+    
+    /* Metric and info boxes */
+    .stMetric label {
+        color: #0D47A1 !important;
+        font-weight: 700 !important;
+    }
+    
+    .stMetric [data-testid="stMetricValue"] {
+        color: #0D47A1 !important;
+        font-weight: 800 !important;
+    }
+    
+    /* Success, Error, Warning messages */
+    .stSuccess, .stError, .stWarning, .stInfo {
+        color: #1a1a2e !important;
+    }
+    
+    /* Tab labels - make them dark & visible */
+    .stTabs [data-baseweb="tab"] {
+        font-size: 0.95rem !important;
+        font-weight: 600 !important;
+        color: #333 !important;
+    }
+    
+    .stTabs [aria-selected="true"] {
+        color: #0D47A1 !important;
+        font-weight: 700 !important;
+    }
+    
+    /* Dataframe text */
+    .stDataFrame {
+        font-size: 0.85rem !important;
+        color: #1a1a2e !important;
+    }
+    
+    /* ── END MAIN CONTENT AREA ─────────────────────────────────────────── */
     
     /* Param cards */
     .param-card {
