@@ -492,8 +492,6 @@ with nav_col2:
     btn_predictor = st.button("🤖 Predictor", use_container_width=True, key="nav_predictor")
 with nav_col3:
     btn_bulk = st.button("📤 Bulk Scanner", use_container_width=True, key="nav_bulk")
-with nav_col4:
-    btn_insight = st.button("🧠 Model Insight", use_container_width=True, key="nav_insight")
 
 # Initialize session state
 if "current_page" not in st.session_state:
