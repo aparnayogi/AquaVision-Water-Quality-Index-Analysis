@@ -716,67 +716,6 @@ elif st.session_state.current_page == "bulk":
         st.dataframe(results_df, use_container_width=True, height=400)
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# PAGE: MODEL INSIGHT
-# ══════════════════════════════════════════════════════════════════════════════
-elif st.session_state.current_page == "insight":
-    st.markdown('<div class="section-title">🧠 Model Insights</div>', unsafe_allow_html=True)
-    
-    tab1, tab2, tab3 = st.tabs(["📊 Feature Importance", "🔥 Correlations", "📈 Model Performance"])
-    
-    with tab1:
-        st.markdown("**XGBoost Regressor Feature Importance**")
-        df_ml = add_engineered_features(df)
-        X = df_ml[FEATURES]
-        importances = reg_model.feature_importances_
-        feat_imp_df = pd.DataFrame({
-            'Feature': FEATURES,
-            'Importance': importances
-        }).sort_values('Importance', ascending=True).tail(12)
-        
-        fig = px.barh(feat_imp_df, x='Importance', y='Feature', 
-                      color='Importance', color_continuous_scale='Reds',
-                      title='Top 12 Most Important Features')
-        fig.update_layout(template='plotly_white', height=400, font=dict(family="Poppins", size=12))
-        st.plotly_chart(fig, use_container_width=True)
-    
-    with tab2:
-        st.markdown("**Parameter Correlations with WQI**")
-        num_cols_list = ['temp','do','ph','conductivity','bod','nitrate','fecal_coliform','total_coliform']
-        corr_matrix = df[num_cols_list + ['WQI']].corr()
-        fig = px.imshow(corr_matrix, text_auto='.2f', aspect='auto',
-                        color_continuous_scale='RdBu_r', zmin=-1, zmax=1,
-                        title='Correlation Matrix')
-        fig.update_layout(template='plotly_white', height=500, font=dict(family="Poppins", size=12))
-        st.plotly_chart(fig, use_container_width=True)
-    
-    with tab3:
-        st.markdown("**Model Architecture & Performance**")
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            st.markdown("""
-            <div class="card">
-                <h3 style="color:#be185d">🤖 XGBoost Regressor</h3>
-                <p><b>Purpose:</b> WQI Score Prediction</p>
-                <p><b>Estimators:</b> 100</p>
-                <p><b>Learning Rate:</b> 0.1</p>
-                <p><b>Max Depth:</b> 6</p>
-                <p><b>Features:</b> 15 engineered</p>
-            </div>
-            """, unsafe_allow_html=True)
-        
-        with col2:
-            st.markdown("""
-            <div class="card">
-                <h3 style="color:#be185d">🌳 Random Forest Classifier</h3>
-                <p><b>Purpose:</b> WQI Category Classification</p>
-                <p><b>Estimators:</b> 100</p>
-                <p><b>Classes:</b> 5 (Excellent, Good, Poor, Very Poor, Unfit)</p>
-                <p><b>Features:</b> 15 engineered</p>
-                <p><b>Training Samples:</b> {len(df):,}</p>
-            </div>
-            """.format(len=len), unsafe_allow_html=True)
 
 
 # ── Footer ─────────────────────────────────────────────────────────────────────
