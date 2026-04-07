@@ -485,7 +485,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Navigation
-nav_col1, nav_col2, nav_col3, nav_col4 = st.columns(4)
+nav_col1, nav_col2, nav_col3 = st.columns(3)
 with nav_col1:
     btn_overview = st.button("📊 Overview", use_container_width=True, key="nav_overview")
 with nav_col2:
@@ -503,8 +503,6 @@ if btn_predictor:
     st.session_state.current_page = "predictor"
 if btn_bulk:
     st.session_state.current_page = "bulk"
-if btn_insight:
-    st.session_state.current_page = "insight"
 
 st.divider()
 
@@ -712,8 +710,6 @@ elif st.session_state.current_page == "bulk":
         col_stat4.metric("✓ Success Rate", f"{success_rate:.0f}%")
         
         st.dataframe(results_df, use_container_width=True, height=400)
-
-
 
 
 # ── Footer ─────────────────────────────────────────────────────────────────────
