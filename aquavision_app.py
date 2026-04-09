@@ -1,6 +1,6 @@
 """
 💧 AquaVision — Water Quality Intelligence
-Simplified & Redesigned | Bulk Scanner + Predictor + Model Insight
+Professional Blue-Teal Design | Bulk Scanner + Predictor + Model Insight
 Run: streamlit run app.py
 """
 
@@ -26,299 +26,358 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# ── Professional Teal/Slate Theme CSS ─────────────────────────────────────────
+# ── Professional Blue-Teal Custom CSS with Proper Font Loading ────────────────────────────────────────────
 st.markdown("""
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
-
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Sora:wght@400;500;600;700;800&display=swap');
+    
     * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
     }
-
-    html, body, [class*="css"], .stMarkdown, .stText, p, div, span, h1, h2, h3 {
-        font-family: 'Inter', 'Segoe UI', sans-serif !important;
-        color: #0f172a !important;
+    
+    html, body, [class*="css"], .stMarkdown, .stText, p, div, span, h1, h2, h3, h4, h5, h6, button, input, select, label {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
     }
-
+    
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+        font-weight: 700 !important;
+        letter-spacing: -0.5px !important;
+    }
+    
     /* ── MAIN BACKGROUND ── */
-    .main, .stApp {
-        background: #f1f5f9 !important;
+    .main {
+        background: linear-gradient(135deg, #f0f7ff 0%, #f0fbff 50%, #ecf5ff 100%) !important;
     }
-
+    
+    .stApp {
+        background: linear-gradient(135deg, #f0f7ff 0%, #f0fbff 50%, #ecf5ff 100%) !important;
+    }
+    
     /* ── HERO BANNER ── */
     .hero-banner {
-        background: linear-gradient(135deg, #0f766e 0%, #0d9488 50%, #14b8a6 100%);
-        padding: 3.5rem 2.5rem;
-        border-radius: 16px;
+        background: linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #0ea5e9 100%);
+        padding: 4rem 3rem;
+        border-radius: 24px;
         text-align: center;
-        margin: 0 0 2.5rem 0;
-        box-shadow: 0 16px 48px rgba(15, 118, 110, 0.30);
+        margin: 0 0 3.5rem 0;
+        box-shadow: 0 25px 50px rgba(3, 105, 161, 0.25);
+        border: none;
         position: relative;
         overflow: hidden;
     }
-
+    
     .hero-banner::before {
         content: '';
         position: absolute;
-        inset: 0;
-        background: repeating-linear-gradient(
-            45deg,
-            rgba(255,255,255,0.03) 0px,
-            rgba(255,255,255,0.03) 1px,
-            transparent 1px,
-            transparent 40px
-        );
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+        background-size: 60px 60px;
+        animation: drift 25s linear infinite;
+        opacity: 0.6;
     }
-
+    
+    .hero-banner::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.05) 100%);
+    }
+    
+    @keyframes drift {
+        0% { transform: translate(0, 0); }
+        100% { transform: translate(60px, 60px); }
+    }
+    
     .hero-banner h1 {
-        font-size: 3rem !important;
-        font-weight: 900 !important;
-        color: #ffffff !important;
+        font-size: 3.5rem;
+        font-weight: 800;
+        color: white !important;
         margin: 0;
         letter-spacing: -1.5px;
         position: relative;
-        z-index: 1;
+        z-index: 2;
+        word-spacing: 0.1em;
     }
-
+    
     .hero-banner p {
-        font-size: 1.1rem !important;
-        color: rgba(255,255,255,0.88) !important;
-        margin: 0.75rem 0 0;
-        font-weight: 500 !important;
+        font-size: 1.15rem;
+        color: rgba(255,255,255,0.95) !important;
+        margin: 1.2rem 0 0;
+        font-weight: 400;
         position: relative;
-        z-index: 1;
+        z-index: 2;
         letter-spacing: 0.3px;
     }
-
+    
     /* ── CARD STYLES ── */
     .card {
-        background: #ffffff;
-        border-radius: 14px;
-        padding: 1.75rem;
-        box-shadow: 0 2px 12px rgba(15, 23, 42, 0.07);
-        border: 1px solid #e2e8f0;
-        margin-bottom: 1.75rem;
+        background: white;
+        border-radius: 20px;
+        padding: 2.2rem;
+        box-shadow: 0 4px 20px rgba(3, 105, 161, 0.06);
+        border: 1px solid rgba(3, 105, 161, 0.08);
+        transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+        margin-bottom: 2rem;
     }
-
+    
+    .card:hover {
+        box-shadow: 0 12px 40px rgba(3, 105, 161, 0.12);
+        transform: translateY(-3px);
+        border-color: rgba(3, 105, 161, 0.15);
+    }
+    
     /* ── METRIC CARD ── */
     .metric-card {
-        background: #ffffff;
-        border-radius: 14px;
-        padding: 1.75rem;
-        border: 1px solid #e2e8f0;
-        border-left: 4px solid #0d9488;
+        background: linear-gradient(135deg, #f0fafb 0%, #ecf9ff 100%);
+        border-radius: 18px;
+        padding: 2.2rem;
+        border: 1.5px solid rgba(3, 105, 161, 0.12);
         text-align: center;
-        margin-bottom: 1.2rem;
-        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+        margin-bottom: 1.3rem;
+        transition: all 0.3s ease;
     }
-
+    
+    .metric-card:hover {
+        background: linear-gradient(135deg, #ecf9ff 0%, #e0f7ff 100%);
+        border-color: rgba(3, 105, 161, 0.25);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(3, 105, 161, 0.1);
+    }
+    
     .metric-label {
-        font-size: 0.78rem !important;
-        color: #475569 !important;
-        font-weight: 800 !important;
-        text-transform: uppercase !important;
-        letter-spacing: 1.5px !important;
+        font-size: 0.8rem;
+        color: #0369a1 !important;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.4px;
+        margin-bottom: 0.8rem;
     }
-
+    
     .metric-value {
-        font-size: 2.6rem !important;
-        font-weight: 900 !important;
-        color: #0f172a !important;
-        margin: 0.6rem 0;
+        font-size: 3rem;
+        font-weight: 800;
+        color: #0284c7 !important;
+        margin: 0.5rem 0;
         letter-spacing: -1px;
     }
-
+    
     .metric-sub {
-        font-size: 0.85rem !important;
-        color: #64748b !important;
-        font-weight: 600 !important;
+        font-size: 0.9rem;
+        color: #0369a1 !important;
+        opacity: 0.65;
+        font-weight: 400;
     }
-
+    
     /* ── SECTION TITLE ── */
     .section-title {
-        font-size: 1.75rem !important;
-        font-weight: 900 !important;
-        color: #0f172a !important;
-        margin: 2rem 0 1.25rem;
-        padding-bottom: 0.75rem;
-        border-bottom: 3px solid #0d9488;
+        font-size: 2.1rem;
+        font-weight: 800;
+        color: #0369a1 !important;
+        margin: 2.5rem 0 1.8rem;
+        padding-bottom: 1.2rem;
+        border-bottom: 3px solid #0ea5e9;
         display: inline-block;
         letter-spacing: -0.5px;
     }
-
+    
     /* ── BADGES ── */
     .wqi-badge {
         display: inline-block;
-        padding: 0.5rem 1.4rem;
-        border-radius: 8px;
-        font-size: 0.85rem !important;
-        font-weight: 800 !important;
-        color: #ffffff !important;
-        text-transform: uppercase !important;
-        letter-spacing: 1px !important;
-        margin-top: 1rem;
+        padding: 0.7rem 1.8rem;
+        border-radius: 28px;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: white !important;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin-top: 1.2rem;
+        font-family: 'Sora', sans-serif !important;
     }
-
+    
     /* ── INPUT STYLING ── */
     .stNumberInput input,
-    .stTextInput input {
-        border-radius: 10px !important;
-        border: 2px solid #cbd5e1 !important;
-        font-weight: 600 !important;
-        color: #0f172a !important;
-        background: #ffffff !important;
+    .stTextInput input,
+    .stSelectbox select {
+        border-radius: 14px !important;
+        border: 2px solid rgba(3, 105, 161, 0.15) !important;
+        font-weight: 500 !important;
+        font-size: 0.95rem !important;
+        background-color: white !important;
+        color: #1a1a1a !important;
     }
-
+    
+    .stNumberInput input::placeholder,
+    .stTextInput input::placeholder {
+        color: #666666 !important;
+    }
+    
     .stNumberInput input:focus,
-    .stTextInput input:focus {
-        border-color: #0d9488 !important;
-        box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.12) !important;
+    .stTextInput input:focus,
+    .stSelectbox select:focus {
+        border-color: #0ea5e9 !important;
+        box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1) !important;
+        outline: none !important;
     }
-
+    
     .stNumberInput label,
     .stTextInput label,
     .stSelectbox label,
     .stSlider label {
-        color: #0f172a !important;
-        font-weight: 800 !important;
-        font-size: 0.9rem !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.5px !important;
+        color: #1a1a1a !important;
+        font-weight: 700 !important;
+        font-size: 1rem !important;
+        margin-bottom: 0.5rem !important;
     }
-
+    
     /* ── BUTTONS ── */
     .stButton > button,
     .stDownloadButton > button {
-        background: #0f766e !important;
-        color: #ffffff !important;
-        font-weight: 800 !important;
+        background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+        color: white !important;
+        font-weight: 700 !important;
         border: none !important;
-        border-radius: 10px !important;
-        padding: 0.75rem 2rem !important;
-        font-size: 0.95rem !important;
-        letter-spacing: 0.4px !important;
-        transition: all 0.2s ease !important;
-        box-shadow: 0 4px 16px rgba(15, 118, 110, 0.25) !important;
-    }
-
-    .stButton > button:hover,
-    .stDownloadButton > button:hover {
-        background: #0d9488 !important;
-        transform: translateY(-1px) !important;
-        box-shadow: 0 8px 24px rgba(15, 118, 110, 0.35) !important;
-    }
-
-    .stButton > button:active,
-    .stDownloadButton > button:active {
-        transform: translateY(0) !important;
-    }
-
-    /* ── TABS ── */
-    .stTabs [data-baseweb="tab"] {
-        font-size: 0.95rem !important;
-        font-weight: 800 !important;
-        color: #334155 !important;
+        border-radius: 14px !important;
+        padding: 0.9rem 2.8rem !important;
+        font-size: 1rem !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 8px 24px rgba(3, 105, 161, 0.25) !important;
         letter-spacing: 0.3px !important;
     }
-
-    .stTabs [aria-selected="true"] {
-        color: #0d9488 !important;
-        border-bottom-color: #0d9488 !important;
+    
+    .stButton > button:hover,
+    .stDownloadButton > button:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 12px 36px rgba(3, 105, 161, 0.35) !important;
     }
-
+    
+    .stButton > button:active,
+    .stDownloadButton > button:active {
+        transform: translateY(0px) !important;
+    }
+    
+    /* ── TABS ── */
+    .stTabs [data-baseweb="tab"] {
+        font-size: 1rem !important;
+        font-weight: 700 !important;
+        color: #0369a1 !important;
+        border-radius: 12px 12px 0 0 !important;
+        padding: 1rem !important;
+    }
+    
+    .stTabs [aria-selected="true"] {
+        color: #0284c7 !important;
+        border-bottom-color: #0ea5e9 !important;
+    }
+    
     /* ── DATA FRAME ── */
     .stDataFrame {
-        font-size: 0.9rem !important;
-        color: #0f172a !important;
-        font-weight: 600 !important;
+        font-size: 0.95rem !important;
+        color: #334155 !important;
+        font-family: 'Inter', sans-serif !important;
     }
-
+    
+    .stDataFrame thead {
+        background: linear-gradient(135deg, #f0fafb 0%, #ecf9ff 100%);
+    }
+    
     /* ── MESSAGES ── */
     .stSuccess {
         background-color: #f0fdf4 !important;
-        border-left: 4px solid #22c55e !important;
-        color: #14532d !important;
-        font-weight: 700 !important;
+        border-left: 5px solid #22c55e !important;
+        color: #166534 !important;
+        border-radius: 12px !important;
+        padding: 1.2rem !important;
+        font-weight: 500 !important;
     }
-
+    
     .stError {
         background-color: #fef2f2 !important;
-        border-left: 4px solid #ef4444 !important;
-        color: #7f1d1d !important;
-        font-weight: 700 !important;
+        border-left: 5px solid #ef4444 !important;
+        color: #991b1b !important;
+        border-radius: 12px !important;
+        padding: 1.2rem !important;
+        font-weight: 500 !important;
     }
-
+    
     .stWarning {
         background-color: #fffbeb !important;
-        border-left: 4px solid #f59e0b !important;
-        color: #78350f !important;
-        font-weight: 700 !important;
+        border-left: 5px solid #f59e0b !important;
+        color: #92400e !important;
+        border-radius: 12px !important;
+        padding: 1.2rem !important;
+        font-weight: 500 !important;
     }
-
+    
     .stInfo {
-        background-color: #eff6ff !important;
-        border-left: 4px solid #3b82f6 !important;
-        color: #1e3a5f !important;
-        font-weight: 700 !important;
+        background-color: #ecf9ff !important;
+        border-left: 5px solid #0ea5e9 !important;
+        color: #0c3d66 !important;
+        border-radius: 12px !important;
+        padding: 1.2rem !important;
+        font-weight: 500 !important;
     }
-
+    
     /* ── DIVIDER ── */
     hr {
         border: none !important;
-        border-top: 1.5px solid #e2e8f0 !important;
-        margin: 1.75rem 0 !important;
+        border-top: 2px solid rgba(3, 105, 161, 0.12) !important;
+        margin: 2.5rem 0 !important;
     }
-
+    
     /* ── FOOTER ── */
     .footer-text {
         text-align: center;
-        color: #475569 !important;
-        font-size: 0.9rem !important;
-        padding: 2rem;
-        font-weight: 700 !important;
+        color: #0369a1 !important;
+        font-size: 0.95rem;
+        padding: 3rem 2.5rem;
+        font-weight: 600;
+        border-top: 2px solid rgba(3, 105, 161, 0.12);
         letter-spacing: 0.3px;
-        border-top: 1.5px solid #e2e8f0;
     }
-
+    
     /* ── HEADINGS ── */
     h1, h2, h3, h4, h5, h6 {
-        color: #0f172a !important;
-        font-weight: 900 !important;
-        letter-spacing: -0.3px;
-    }
-
-    p, .stMarkdown p {
-        color: #334155 !important;
-        line-height: 1.7 !important;
-        font-weight: 500 !important;
-    }
-
-    /* ── NAV ACTIVE STATE ── */
-    .nav-active > button {
-        background: #0d9488 !important;
-        border-left: 4px solid #0f766e !important;
-    }
-
-    /* ── SPINNER ── */
-    .stSpinner > div {
-        border-top-color: #0d9488 !important;
-    }
-
-    /* ── METRIC NATIVE ── */
-    [data-testid="metric-container"] label {
-        color: #475569 !important;
+        color: #0369a1 !important;
         font-weight: 800 !important;
-        text-transform: uppercase !important;
-        font-size: 0.78rem !important;
-        letter-spacing: 1px !important;
+        letter-spacing: -0.5px !important;
     }
-
-    [data-testid="metric-container"] [data-testid="metric-value"] {
-        color: #0f172a !important;
-        font-weight: 900 !important;
-        font-size: 2rem !important;
+    
+    p, .stMarkdown p {
+        color: #2d3748 !important;
+        line-height: 1.8 !important;
+        font-weight: 400 !important;
+    }
+    
+    /* ── General Text Visibility ── */
+    .stMarkdown {
+        color: #1a1a1a !important;
+    }
+    
+    /* ── UPLOAD BOX ── */
+    .upload-box {
+        border: 2px dashed #0ea5e9;
+        border-radius: 18px;
+        padding: 3.5rem 2.5rem;
+        text-align: center;
+        background: linear-gradient(135deg, #f0fafb 0%, #ecf9ff 100%);
+        transition: all 0.3s ease;
+    }
+    
+    .upload-box:hover {
+        border-color: #0284c7;
+        background: linear-gradient(135deg, #ecf9ff 0%, #e0f7ff 100%);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -334,13 +393,13 @@ def wqi_category(score):
 
 def wqi_color(cat):
     colors = {
-        'Excellent': '#059669',
-        'Good': '#0284c7',
-        'Poor': '#d97706',
-        'Very Poor': '#dc2626',
-        'Unfit for Drinking': '#7f1d1d'
+        'Excellent': '#10b981',
+        'Good': '#0ea5e9',
+        'Poor': '#f59e0b',
+        'Very Poor': '#ef4444',
+        'Unfit for Drinking': '#991b1b'
     }
-    return colors.get(cat, '#0d9488')
+    return colors.get(cat, '#0ea5e9')
 
 FEATURES = [
     'temp','do','ph','conductivity','bod','nitrate',
@@ -488,11 +547,11 @@ with st.spinner('⏳ Loading AquaVision... Training models...'):
     reg_model, clf_model, scaler, label_enc = train_models(df)
 
 
-# ── Hero Banner ────────────────────────────────────────────────────────────────
+# ── Top Navigation Buttons ─────────────────────────────────────────────────────
 st.markdown("""
 <div class="hero-banner">
     <h1>💧 AquaVision</h1>
-    <p>Water Quality Prediction Intelligence Platform</p>
+    <p>Water Quality Prediction Intelligence</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -524,9 +583,9 @@ st.divider()
 # ══════════════════════════════════════════════════════════════════════════════
 if st.session_state.current_page == "overview":
     st.markdown('<div class="section-title">📊 Overview</div>', unsafe_allow_html=True)
-
+    
     c1, c2, c3, c4 = st.columns(4)
-
+    
     with c1:
         st.markdown(f"""
         <div class="metric-card">
@@ -535,7 +594,7 @@ if st.session_state.current_page == "overview":
             <div class="metric-sub">observations</div>
         </div>
         """, unsafe_allow_html=True)
-
+    
     with c2:
         st.markdown(f"""
         <div class="metric-card">
@@ -544,7 +603,7 @@ if st.session_state.current_page == "overview":
             <div class="metric-sub">quality index</div>
         </div>
         """, unsafe_allow_html=True)
-
+    
     with c3:
         st.markdown(f"""
         <div class="metric-card">
@@ -553,7 +612,7 @@ if st.session_state.current_page == "overview":
             <div class="metric-sub">unique states</div>
         </div>
         """, unsafe_allow_html=True)
-
+    
     with c4:
         st.markdown(f"""
         <div class="metric-card">
@@ -562,34 +621,20 @@ if st.session_state.current_page == "overview":
             <div class="metric-sub">monitoring sites</div>
         </div>
         """, unsafe_allow_html=True)
-
+    
     st.divider()
-
+    
     col1, col2 = st.columns(2)
-
+    
     with col1:
         st.markdown('<div class="section-title">Category Distribution</div>', unsafe_allow_html=True)
         cat_cnt = df['WQI_Category'].value_counts().reset_index()
         cat_cnt.columns = ['Category', 'Count']
-        color_map = {
-            'Excellent': '#059669',
-            'Good': '#0284c7',
-            'Poor': '#d97706',
-            'Very Poor': '#dc2626',
-            'Unfit for Drinking': '#7f1d1d'
-        }
-        fig = px.pie(
-            cat_cnt, names='Category', values='Count',
-            color='Category', color_discrete_map=color_map, hole=0.45
-        )
-        fig.update_layout(
-            template='plotly_white', height=360,
-            font=dict(family="Inter", size=13, color="#0f172a"),
-            legend=dict(font=dict(size=12, color="#0f172a"))
-        )
-        fig.update_traces(textfont=dict(size=13, color="#0f172a", family="Inter"))
+        color_map = {'Excellent': '#10b981', 'Good': '#0ea5e9', 'Poor': '#f59e0b', 'Very Poor': '#ef4444', 'Unfit for Drinking': '#991b1b'}
+        fig = px.pie(cat_cnt, names='Category', values='Count', color='Category', color_discrete_map=color_map, hole=0.4)
+        fig.update_layout(template='plotly_white', height=350, font=dict(family="Inter", size=12), margin=dict(t=20,b=20))
         st.plotly_chart(fig, use_container_width=True)
-
+    
     with col2:
         st.markdown('<div class="section-title">Parameter Statistics</div>', unsafe_allow_html=True)
         params = ['temp', 'do', 'ph', 'conductivity', 'bod', 'nitrate']
@@ -608,77 +653,57 @@ if st.session_state.current_page == "overview":
 # ══════════════════════════════════════════════════════════════════════════════
 elif st.session_state.current_page == "predictor":
     st.markdown('<div class="section-title">🤖 WQI Predictor</div>', unsafe_allow_html=True)
-    st.markdown("Enter water quality parameters below to get an instant WQI prediction.")
-
+    st.markdown("Enter water quality parameters to get instant WQI predictions")
+    
     col1, col2, col3 = st.columns(3)
-
+    
     with col1:
         temp    = st.number_input("🌡️ Temperature (°C)", 0.0, 50.0, 25.0, 0.1)
         do      = st.number_input("💨 Dissolved Oxygen (mg/L)", 0.0, 20.0, 7.5, 0.1)
         ph      = st.number_input("⚗️ pH Level", 0.0, 14.0, 7.0, 0.1)
-
+    
     with col2:
         cond    = st.number_input("⚡ Conductivity (µS/cm)", 0.0, 5000.0, 250.0, 1.0)
         bod     = st.number_input("🦠 BOD (mg/L)", 0.0, 100.0, 2.0, 0.1)
         nitrate = st.number_input("🧪 Nitrate (mg/L)", 0.0, 200.0, 5.0, 0.1)
-
+    
     with col3:
         fecal   = st.number_input("🔬 Fecal Coliform", 0.0, 200000.0, 100.0, 1.0)
         total   = st.number_input("🔭 Total Coliform", 0.0, 200000.0, 500.0, 1.0)
-
+    
     st.divider()
-
+    
     if st.button("🚀 PREDICT WQI", use_container_width=True, type="primary"):
-        row = {
-            'temp': temp, 'do': do, 'ph': ph, 'conductivity': cond,
-            'bod': bod, 'nitrate': nitrate, 'fecal_coliform': fecal, 'total_coliform': total
-        }
+        row = {'temp':temp,'do':do,'ph':ph,'conductivity':cond,
+               'bod':bod,'nitrate':nitrate,'fecal_coliform':fecal,'total_coliform':total}
         feat_scaled = scaler.transform([engineer_single(row)])
         wqi_pred = float(reg_model.predict(feat_scaled)[0])
         cat_pred = label_enc.inverse_transform(clf_model.predict(feat_scaled))[0]
         cat_color = wqi_color(cat_pred)
-
+        
         col_r1, col_r2 = st.columns(2)
-
+        
         with col_r1:
             st.markdown(f"""
-            <div class="metric-card" style="border-left-color:{cat_color};">
+            <div class="metric-card">
                 <div class="metric-label">Predicted WQI Score</div>
-                <div class="metric-value" style="color:{cat_color} !important;">{wqi_pred:.2f}</div>
+                <div class="metric-value" style="color:{cat_color}">{wqi_pred:.2f}</div>
                 <span class="wqi-badge" style="background:{cat_color};">{cat_pred}</span>
             </div>
             """, unsafe_allow_html=True)
-
+        
         with col_r2:
             fig = go.Figure(go.Indicator(
                 mode="gauge+number", value=min(wqi_pred, 120),
-                domain={'x': [0, 1], 'y': [0, 1]},
-                title={'text': "WQI Gauge", 'font': {'size': 15, 'color': '#0f172a', 'family': 'Inter'}},
-                number={'font': {'size': 36, 'color': cat_color, 'family': 'Inter'}},
-                gauge={
-                    'axis': {'range': [0, 120], 'tickfont': {'color': '#334155', 'size': 11}},
-                    'bar': {'color': cat_color},
-                    'steps': [
-                        {'range': [0, 25],   'color': 'rgba(5,150,105,0.15)'},
-                        {'range': [25, 50],  'color': 'rgba(2,132,199,0.15)'},
-                        {'range': [50, 75],  'color': 'rgba(217,119,6,0.15)'},
-                        {'range': [75, 100], 'color': 'rgba(220,38,38,0.15)'},
-                        {'range': [100, 120],'color': 'rgba(127,29,29,0.15)'}
-                    ],
-                    'threshold': {
-                        'line': {'color': cat_color, 'width': 3},
-                        'thickness': 0.75,
-                        'value': min(wqi_pred, 120)
-                    }
-                }
-            ))
-            fig.update_layout(
-                height=320,
-                margin=dict(t=40, b=10, l=10, r=10),
-                font=dict(family="Inter", size=12, color="#0f172a"),
-                paper_bgcolor='rgba(0,0,0,0)',
-                plot_bgcolor='rgba(0,0,0,0)'
-            )
+                domain={'x':[0,1],'y':[0,1]}, title={'text':"WQI Gauge"},
+                gauge={'axis':{'range':[0,120]},
+                       'bar':{'color':cat_color},
+                       'steps':[{'range':[0,25],'color':'rgba(16,185,129,0.2)'},
+                                {'range':[25,50],'color':'rgba(14,165,233,0.2)'},
+                                {'range':[50,75],'color':'rgba(245,158,11,0.2)'},
+                                {'range':[75,100],'color':'rgba(239,68,68,0.2)'},
+                                {'range':[100,120],'color':'rgba(153,27,27,0.2)'}]}))
+            fig.update_layout(height=320, margin=dict(t=40,b=10), font=dict(family="Inter", size=12))
             st.plotly_chart(fig, use_container_width=True)
 
 
@@ -687,29 +712,29 @@ elif st.session_state.current_page == "predictor":
 # ══════════════════════════════════════════════════════════════════════════════
 elif st.session_state.current_page == "bulk":
     st.markdown('<div class="section-title">📤 Bulk WQI Scanner</div>', unsafe_allow_html=True)
-    st.markdown("Process multiple water samples at once by uploading a CSV or Excel file.")
-
+    st.markdown("Process multiple water samples at once")
+    
     if 'bulk_results' not in st.session_state:
         st.session_state.bulk_results = None
-
+    
     col1, col2, col3 = st.columns(3)
-
+    
     with col1:
         if st.download_button("📄 Download Template", create_sample_csv(), "sample.csv", "text/csv", use_container_width=True):
             st.success("Template ready!")
-
+    
     with col2:
         uploaded_file = st.file_uploader("Upload CSV/Excel", type=['csv', 'xlsx', 'xls', 'json'], key='bulk_upload')
-
+    
     with col3:
         if st.session_state.bulk_results is not None:
             csv_data = st.session_state.bulk_results.to_csv(index=False).encode('utf-8')
             st.download_button("📥 Download Results", csv_data, "results.csv", "text/csv", use_container_width=True)
         else:
             st.button("📥 Results (scan first)", disabled=True, use_container_width=True)
-
+    
     st.divider()
-
+    
     if uploaded_file is not None:
         try:
             if uploaded_file.name.endswith('.csv'):
@@ -718,45 +743,43 @@ elif st.session_state.current_page == "bulk":
                 df_upload = pd.read_json(uploaded_file)
             else:
                 df_upload = pd.read_excel(uploaded_file)
-
+            
             col_info1, col_info2, col_info3 = st.columns(3)
             col_info1.metric("📊 Records", len(df_upload))
             col_info2.metric("📈 Columns", len(df_upload.columns))
             col_info3.metric("📦 Size", f"{uploaded_file.size / 1024:.1f} KB")
-
+            
             is_valid, validation_msg = validate_bulk_data(df_upload)
-
+            
             if is_valid:
                 st.success(f"✅ {validation_msg}")
                 st.dataframe(df_upload.head(), use_container_width=True)
-
+                
                 if st.button("🚀 SCAN & PREDICT", use_container_width=True, type="primary"):
                     with st.spinner('⏳ Processing...'):
-                        st.session_state.bulk_results = predict_batch_wqi(
-                            df_upload, reg_model, clf_model, scaler, label_enc
-                        )
-                    st.success(f"✅ Done! {len(st.session_state.bulk_results)} records processed.")
+                        st.session_state.bulk_results = predict_batch_wqi(df_upload, reg_model, clf_model, scaler, label_enc)
+                    st.success(f"✅ Done! {len(st.session_state.bulk_results)} records processed")
             else:
                 st.error(f"❌ {validation_msg}")
         except Exception as e:
             st.error(f"❌ Error: {str(e)}")
-
+    
     if st.session_state.bulk_results is not None:
         st.divider()
         st.markdown('<div class="section-title">📊 Results</div>', unsafe_allow_html=True)
         results_df = st.session_state.bulk_results.copy()
-
+        
         col_stat1, col_stat2, col_stat3, col_stat4 = st.columns(4)
         avg_wqi = pd.to_numeric(results_df['WQI_Score'], errors='coerce').mean()
         excellent_count = len(results_df[results_df['Category'] == 'Excellent'])
         poor_count = len(results_df[results_df['Category'].isin(['Poor', 'Very Poor', 'Unfit for Drinking'])])
         success_rate = len(results_df[results_df['Category'] != 'Processing Error']) / len(results_df) * 100
-
+        
         col_stat1.metric("📊 Avg WQI", f"{avg_wqi:.2f}")
         col_stat2.metric("✅ Excellent", excellent_count)
         col_stat3.metric("⚠️ Needs Attention", poor_count)
         col_stat4.metric("✓ Success Rate", f"{success_rate:.0f}%")
-
+        
         st.dataframe(results_df, use_container_width=True, height=400)
 
 
