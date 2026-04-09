@@ -1,6 +1,6 @@
 """
 💧 AquaVision — Water Quality Intelligence
-Simplified & Redesigned | Bulk Scanner + Predictor + Model Insight
+Professional Blue-Teal Design | Bulk Scanner + Predictor + Model Insight
 Run: streamlit run app.py
 """
 
@@ -26,36 +26,47 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# ── Pinkish Professional Custom CSS ────────────────────────────────────────────
+# ── Professional Blue-Teal Custom CSS with Proper Font Loading ────────────────────────────────────────────
 st.markdown("""
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Sora:wght@400;500;600;700;800&display=swap');
+    
     * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
     }
     
-    html, body, [class*="css"], .stMarkdown, .stText, p, div, span, h1, h2, h3 {
-        font-family: 'Poppins', 'Segoe UI', sans-serif !important;
+    html, body, [class*="css"], .stMarkdown, .stText, p, div, span, h1, h2, h3, h4, h5, h6, button, input, select, label {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+        font-weight: 700 !important;
+        letter-spacing: -0.5px !important;
     }
     
     /* ── MAIN BACKGROUND ── */
     .main {
-        background: linear-gradient(135deg, #fef5f8 0%, #fdf2f7 50%, #f8f0f5 100%) !important;
+        background: linear-gradient(135deg, #f0f7ff 0%, #f0fbff 50%, #ecf5ff 100%) !important;
     }
     
     .stApp {
-        background: linear-gradient(135deg, #fef5f8 0%, #fdf2f7 50%, #f8f0f5 100%) !important;
+        background: linear-gradient(135deg, #f0f7ff 0%, #f0fbff 50%, #ecf5ff 100%) !important;
     }
     
     /* ── HERO BANNER ── */
     .hero-banner {
-        background: linear-gradient(135deg, #ec4899 0%, #db2777 50%, #be185d 100%);
-        padding: 3.5rem 2.5rem;
-        border-radius: 20px;
+        background: linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #0ea5e9 100%);
+        padding: 4rem 3rem;
+        border-radius: 24px;
         text-align: center;
-        margin: 0 0 3rem 0;
-        box-shadow: 0 20px 60px rgba(236, 72, 153, 0.35);
+        margin: 0 0 3.5rem 0;
+        box-shadow: 0 25px 50px rgba(3, 105, 161, 0.25);
         border: none;
         position: relative;
         overflow: hidden;
@@ -68,150 +79,181 @@ st.markdown("""
         right: -50%;
         width: 200%;
         height: 200%;
-        background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-        background-size: 50px 50px;
-        animation: drift 20s linear infinite;
+        background: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+        background-size: 60px 60px;
+        animation: drift 25s linear infinite;
+        opacity: 0.6;
+    }
+    
+    .hero-banner::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.05) 100%);
     }
     
     @keyframes drift {
         0% { transform: translate(0, 0); }
-        100% { transform: translate(50px, 50px); }
+        100% { transform: translate(60px, 60px); }
     }
     
     .hero-banner h1 {
-        font-size: 3.2rem;
+        font-size: 3.5rem;
         font-weight: 800;
         color: white !important;
         margin: 0;
-        letter-spacing: -1px;
+        letter-spacing: -1.5px;
         position: relative;
-        z-index: 1;
+        z-index: 2;
+        word-spacing: 0.1em;
     }
     
     .hero-banner p {
-        font-size: 1.1rem;
-        color: rgba(255,255,255,0.9) !important;
-        margin: 1rem 0 0;
-        font-weight: 300;
+        font-size: 1.15rem;
+        color: rgba(255,255,255,0.95) !important;
+        margin: 1.2rem 0 0;
+        font-weight: 400;
         position: relative;
-        z-index: 1;
+        z-index: 2;
+        letter-spacing: 0.3px;
     }
     
     /* ── CARD STYLES ── */
     .card {
         background: white;
-        border-radius: 18px;
-        padding: 2rem;
-        box-shadow: 0 8px 32px rgba(236, 72, 153, 0.08);
-        border: 1px solid rgba(236, 72, 153, 0.1);
+        border-radius: 20px;
+        padding: 2.2rem;
+        box-shadow: 0 4px 20px rgba(3, 105, 161, 0.06);
+        border: 1px solid rgba(3, 105, 161, 0.08);
         transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
         margin-bottom: 2rem;
     }
     
     .card:hover {
-        box-shadow: 0 16px 48px rgba(236, 72, 153, 0.15);
-        transform: translateY(-4px);
-        border-color: rgba(236, 72, 153, 0.2);
+        box-shadow: 0 12px 40px rgba(3, 105, 161, 0.12);
+        transform: translateY(-3px);
+        border-color: rgba(3, 105, 161, 0.15);
     }
     
     /* ── METRIC CARD ── */
     .metric-card {
-        background: linear-gradient(135deg, #fff5f7 0%, #ffe4ed 100%);
-        border-radius: 16px;
-        padding: 2rem;
-        border: 1px solid rgba(236, 72, 153, 0.15);
+        background: linear-gradient(135deg, #f0fafb 0%, #ecf9ff 100%);
+        border-radius: 18px;
+        padding: 2.2rem;
+        border: 1.5px solid rgba(3, 105, 161, 0.12);
         text-align: center;
-        margin-bottom: 1.2rem;
+        margin-bottom: 1.3rem;
+        transition: all 0.3s ease;
+    }
+    
+    .metric-card:hover {
+        background: linear-gradient(135deg, #ecf9ff 0%, #e0f7ff 100%);
+        border-color: rgba(3, 105, 161, 0.25);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(3, 105, 161, 0.1);
     }
     
     .metric-label {
-        font-size: 0.85rem;
-        color: #be185d !important;
+        font-size: 0.8rem;
+        color: #0369a1 !important;
         font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 1.2px;
+        letter-spacing: 1.4px;
+        margin-bottom: 0.8rem;
     }
     
     .metric-value {
-        font-size: 2.8rem;
+        font-size: 3rem;
         font-weight: 800;
-        color: #ec4899 !important;
-        margin: 0.8rem 0;
+        color: #0284c7 !important;
+        margin: 0.5rem 0;
+        letter-spacing: -1px;
     }
     
     .metric-sub {
         font-size: 0.9rem;
-        color: #be185d !important;
-        opacity: 0.7;
+        color: #0369a1 !important;
+        opacity: 0.65;
+        font-weight: 400;
     }
     
     /* ── SECTION TITLE ── */
     .section-title {
-        font-size: 2rem;
+        font-size: 2.1rem;
         font-weight: 800;
-        color: #be185d !important;
-        margin: 2.5rem 0 1.5rem;
-        padding-bottom: 1rem;
-        border-bottom: 3px solid #ec4899;
+        color: #0369a1 !important;
+        margin: 2.5rem 0 1.8rem;
+        padding-bottom: 1.2rem;
+        border-bottom: 3px solid #0ea5e9;
         display: inline-block;
+        letter-spacing: -0.5px;
     }
     
     /* ── BADGES ── */
     .wqi-badge {
         display: inline-block;
-        padding: 0.6rem 1.5rem;
-        border-radius: 25px;
+        padding: 0.7rem 1.8rem;
+        border-radius: 28px;
         font-size: 0.9rem;
         font-weight: 700;
         color: white !important;
         text-transform: uppercase;
-        letter-spacing: 0.6px;
-        margin-top: 1rem;
+        letter-spacing: 0.8px;
+        margin-top: 1.2rem;
+        font-family: 'Sora', sans-serif !important;
     }
     
     /* ── INPUT STYLING ── */
     .stNumberInput input,
     .stTextInput input,
     .stSelectbox select {
-        border-radius: 12px !important;
-        border: 2px solid rgba(236, 72, 153, 0.2) !important;
+        border-radius: 14px !important;
+        border: 2px solid rgba(3, 105, 161, 0.15) !important;
         font-weight: 500 !important;
+        font-size: 0.95rem !important;
+        background-color: white !important;
     }
     
     .stNumberInput input:focus,
     .stTextInput input:focus,
     .stSelectbox select:focus {
-        border-color: #ec4899 !important;
-        box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1) !important;
+        border-color: #0ea5e9 !important;
+        box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1) !important;
+        outline: none !important;
     }
     
     .stNumberInput label,
     .stTextInput label,
     .stSelectbox label,
     .stSlider label {
-        color: #be185d !important;
+        color: #0369a1 !important;
         font-weight: 700 !important;
         font-size: 1rem !important;
+        margin-bottom: 0.5rem !important;
     }
     
     /* ── BUTTONS ── */
     .stButton > button,
     .stDownloadButton > button {
-        background: linear-gradient(135deg, #ec4899 0%, #db2777 100%) !important;
+        background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
         color: white !important;
         font-weight: 700 !important;
         border: none !important;
-        border-radius: 12px !important;
-        padding: 0.8rem 2.5rem !important;
+        border-radius: 14px !important;
+        padding: 0.9rem 2.8rem !important;
         font-size: 1rem !important;
         transition: all 0.3s ease !important;
-        box-shadow: 0 8px 24px rgba(236, 72, 153, 0.3) !important;
+        box-shadow: 0 8px 24px rgba(3, 105, 161, 0.25) !important;
+        letter-spacing: 0.3px !important;
     }
     
     .stButton > button:hover,
     .stDownloadButton > button:hover {
         transform: translateY(-2px) !important;
-        box-shadow: 0 12px 32px rgba(236, 72, 153, 0.4) !important;
+        box-shadow: 0 12px 36px rgba(3, 105, 161, 0.35) !important;
     }
     
     .stButton > button:active,
@@ -223,92 +265,110 @@ st.markdown("""
     .stTabs [data-baseweb="tab"] {
         font-size: 1rem !important;
         font-weight: 700 !important;
-        color: #be185d !important;
+        color: #0369a1 !important;
         border-radius: 12px 12px 0 0 !important;
+        padding: 1rem !important;
     }
     
     .stTabs [aria-selected="true"] {
-        color: #ec4899 !important;
-        border-bottom-color: #ec4899 !important;
+        color: #0284c7 !important;
+        border-bottom-color: #0ea5e9 !important;
     }
     
     /* ── DATA FRAME ── */
     .stDataFrame {
         font-size: 0.95rem !important;
         color: #334155 !important;
+        font-family: 'Inter', sans-serif !important;
+    }
+    
+    .stDataFrame thead {
+        background: linear-gradient(135deg, #f0fafb 0%, #ecf9ff 100%);
     }
     
     /* ── MESSAGES ── */
     .stSuccess {
         background-color: #f0fdf4 !important;
-        border-left: 4px solid #22c55e !important;
+        border-left: 5px solid #22c55e !important;
         color: #166534 !important;
+        border-radius: 12px !important;
+        padding: 1.2rem !important;
+        font-weight: 500 !important;
     }
     
     .stError {
         background-color: #fef2f2 !important;
-        border-left: 4px solid #ef4444 !important;
+        border-left: 5px solid #ef4444 !important;
         color: #991b1b !important;
+        border-radius: 12px !important;
+        padding: 1.2rem !important;
+        font-weight: 500 !important;
     }
     
     .stWarning {
         background-color: #fffbeb !important;
-        border-left: 4px solid #f59e0b !important;
+        border-left: 5px solid #f59e0b !important;
         color: #92400e !important;
+        border-radius: 12px !important;
+        padding: 1.2rem !important;
+        font-weight: 500 !important;
     }
     
     .stInfo {
         background-color: #ecf9ff !important;
-        border-left: 4px solid #0ea5e9 !important;
-        color: #0c2340 !important;
+        border-left: 5px solid #0ea5e9 !important;
+        color: #0c3d66 !important;
+        border-radius: 12px !important;
+        padding: 1.2rem !important;
+        font-weight: 500 !important;
     }
     
     /* ── DIVIDER ── */
     hr {
         border: none !important;
-        border-top: 2px solid rgba(236, 72, 153, 0.15) !important;
-        margin: 2rem 0 !important;
+        border-top: 2px solid rgba(3, 105, 161, 0.12) !important;
+        margin: 2.5rem 0 !important;
     }
     
     /* ── FOOTER ── */
     .footer-text {
         text-align: center;
-        color: #be185d !important;
+        color: #0369a1 !important;
         font-size: 0.95rem;
-        padding: 2.5rem;
-        font-weight: 500;
-        border-top: 2px solid rgba(236, 72, 153, 0.15);
+        padding: 3rem 2.5rem;
+        font-weight: 600;
+        border-top: 2px solid rgba(3, 105, 161, 0.12);
+        letter-spacing: 0.3px;
     }
     
     /* ── HEADINGS ── */
     h1, h2, h3, h4, h5, h6 {
-        color: #be185d !important;
+        color: #0369a1 !important;
         font-weight: 800 !important;
+        letter-spacing: -0.5px !important;
     }
     
     p, .stMarkdown p {
         color: #475569 !important;
-        line-height: 1.7 !important;
-        font-weight: 500;
+        line-height: 1.8 !important;
+        font-weight: 400 !important;
     }
     
     /* ── UPLOAD BOX ── */
     .upload-box {
-        border: 2px dashed #ec4899;
-        border-radius: 16px;
-        padding: 3rem 2rem;
+        border: 2px dashed #0ea5e9;
+        border-radius: 18px;
+        padding: 3.5rem 2.5rem;
         text-align: center;
-        background: linear-gradient(135deg, #fff5f7 0%, #ffe4ed 100%);
+        background: linear-gradient(135deg, #f0fafb 0%, #ecf9ff 100%);
         transition: all 0.3s ease;
     }
     
     .upload-box:hover {
-        border-color: #db2777;
-        background: linear-gradient(135deg, #ffe4ed 0%, #ffb3d9 100%);
+        border-color: #0284c7;
+        background: linear-gradient(135deg, #ecf9ff 0%, #e0f7ff 100%);
     }
 </style>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 """, unsafe_allow_html=True)
 
 
@@ -328,7 +388,7 @@ def wqi_color(cat):
         'Very Poor': '#ef4444',
         'Unfit for Drinking': '#991b1b'
     }
-    return colors.get(cat, '#ec4899')
+    return colors.get(cat, '#0ea5e9')
 
 FEATURES = [
     'temp','do','ph','conductivity','bod','nitrate',
@@ -561,7 +621,7 @@ if st.session_state.current_page == "overview":
         cat_cnt.columns = ['Category', 'Count']
         color_map = {'Excellent': '#10b981', 'Good': '#0ea5e9', 'Poor': '#f59e0b', 'Very Poor': '#ef4444', 'Unfit for Drinking': '#991b1b'}
         fig = px.pie(cat_cnt, names='Category', values='Count', color='Category', color_discrete_map=color_map, hole=0.4)
-        fig.update_layout(template='plotly_white', height=350, font=dict(family="Poppins", size=12))
+        fig.update_layout(template='plotly_white', height=350, font=dict(family="Inter", size=12), margin=dict(t=20,b=20))
         st.plotly_chart(fig, use_container_width=True)
     
     with col2:
@@ -632,7 +692,7 @@ elif st.session_state.current_page == "predictor":
                                 {'range':[50,75],'color':'rgba(245,158,11,0.2)'},
                                 {'range':[75,100],'color':'rgba(239,68,68,0.2)'},
                                 {'range':[100,120],'color':'rgba(153,27,27,0.2)'}]}))
-            fig.update_layout(height=320, margin=dict(t=40,b=10), font=dict(family="Poppins", size=12))
+            fig.update_layout(height=320, margin=dict(t=40,b=10), font=dict(family="Inter", size=12))
             st.plotly_chart(fig, use_container_width=True)
 
 
